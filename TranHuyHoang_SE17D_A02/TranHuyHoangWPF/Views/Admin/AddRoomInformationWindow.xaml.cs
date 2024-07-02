@@ -33,7 +33,6 @@ namespace TranHuyHoangWPF
             {
                 RoomStatus = 1
             };
-            txtStatus.Text = "1";
             DataContext = roomInformation;
 
             txtRoomType.ItemsSource = roomTypeService.GetRoomTypes();
@@ -44,17 +43,34 @@ namespace TranHuyHoangWPF
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+
+            if (string.IsNullOrWhiteSpace(txtRoomNumber.Text) ||
+                txtRoomType.SelectedValue == null ||
+                string.IsNullOrWhiteSpace(txtRoomDescription.Text) ||
+                string.IsNullOrWhiteSpace(txtRoomMaxCapacity.Text) ||
+                string.IsNullOrWhiteSpace(txtPrice.Text))
+            {
+                MessageBox.Show("Please fill in all fields correctly.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!int.TryParse(txtRoomMaxCapacity.Text, out int roomMaxCapacity))
+            {
+                MessageBox.Show("Max Capacity must be a valid number.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!decimal.TryParse(txtPrice.Text, out decimal roomPrice))
+            {
+                MessageBox.Show("Price must be a valid decimal number.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             roomInformation.RoomTypeId = (int)txtRoomType.SelectedValue;
 
+            // So sánh với AddCustomer, ko cần gán các trường, đã có trong DBContext, Binding
 
-            if (btnAdd.Content.Equals("Add"))
-            {
-                roomInformationService.AddRoomInformation(roomInformation);
-            }
-            else
-            {
-                roomInformationService.UpdateRoomInformation(roomInformation);
-            }
+            roomInformationService.AddRoomInformation(roomInformation);
 
             DialogResult = true;
             Close();
