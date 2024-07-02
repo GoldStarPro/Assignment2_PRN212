@@ -35,33 +35,43 @@ namespace TranHuyHoangWPF
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (btnAdd.Content.ToString()!.Equals("Add"))
+            //if (string.IsNullOrWhiteSpace(txtFullName.Text))
+            //{
+            //    MessageBox.Show("Please enter the full name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+
+            if (string.IsNullOrWhiteSpace(txtFullName.Text) ||
+                string.IsNullOrWhiteSpace(txtEmail.Text) ||
+                string.IsNullOrWhiteSpace(txtPhone.Text) ||
+                !dptbBirthday.SelectedDate.HasValue ||
+                string.IsNullOrWhiteSpace(txtOldPassword.Password) ||
+                string.IsNullOrWhiteSpace(txtcfPassword.Password))
             {
-                if (txtOldPassword.Password != txtNewPassword.Password)
-                {
-                    MessageBox.Show("Passwords do not match", "Profile");
-                }
-                else
-                {
-                    customer.CustomerFullName = txtFullName.Text.Trim();
-                    customer.Telephone = txtPhone.Text.Trim();
-                    customer.CustomerBirthday = DateOnly.FromDateTime(DateTime.Parse(dptbBirthday.Text.Trim()));
-                    customer.EmailAddress = txtEmail.Text.Trim();
-                    customer.Password = txtOldPassword.Password;
-                    customer.CustomerStatus = 1;
-                    customerService.AddCustomer(customer);
-                }
-
-                DialogResult = true;
-
-                Close();
-
+                MessageBox.Show("Please fill in all fields correctly.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            else if (!string.IsNullOrEmpty(txtOldPassword.Password) && !string.IsNullOrEmpty(txtOldPassword.Password) && !txtOldPassword.Password.Equals(customer.Password))
+
+            // Kiểm tra xem mật khẩu có khớp không
+            if (txtOldPassword.Password != txtcfPassword.Password)
             {
-                MessageBox.Show("Password is incorrect", "Profile");
+                MessageBox.Show("Passwords do not match", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
+
+            // Nếu tất cả các trường hợp lệ, tiến hành thêm Customer
+            customer.CustomerFullName = txtFullName.Text.Trim();
+            customer.Telephone = txtPhone.Text.Trim();
+            customer.CustomerBirthday = DateOnly.FromDateTime(dptbBirthday.SelectedDate.Value);
+            customer.EmailAddress = txtEmail.Text.Trim();
+            customer.Password = txtOldPassword.Password;
+            customer.CustomerStatus = 1;
+            customerService.AddCustomer(customer);
+
+            DialogResult = true;
+            Close();
         }
+
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
