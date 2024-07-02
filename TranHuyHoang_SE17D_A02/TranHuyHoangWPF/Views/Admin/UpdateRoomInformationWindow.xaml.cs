@@ -17,45 +17,36 @@ using System.Windows.Shapes;
 namespace TranHuyHoangWPF
 {
     /// <summary>
-    /// Interaction logic for AddRoomInformationWindow.xaml
+    /// Interaction logic for UpdateRoomInformationWindow.xaml
     /// </summary>
-    public partial class AddRoomInformationWindow : Window
+    public partial class UpdateRoomInformationWindow : Window
     {
         private RoomInformation roomInformation;
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
         private readonly IRoomTypeService roomTypeService = new RoomTypeService();
 
-
-        public AddRoomInformationWindow()
+        public UpdateRoomInformationWindow(RoomInformation _roomInformation)
         {
             InitializeComponent();
-            roomInformation = new RoomInformation
-            {
-                RoomStatus = 1
-            };
-            txtStatus.Text = "1";
+            roomInformation = _roomInformation;
             DataContext = roomInformation;
 
+            this.Title = "Update Room Information Window";
             txtRoomType.ItemsSource = roomTypeService.GetRoomTypes();
-            txtRoomType.DisplayMemberPath = "RoomTypeName";
-            txtRoomType.SelectedValuePath = "RoomTypeId";
+            txtRoomType.DisplayMemberPath = "RoomTypeName"; 
+            txtRoomType.SelectedValuePath = "RoomTypeId"; 
+            txtRoomType.SelectedValue = roomInformation.RoomTypeId;
         }
 
-
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             roomInformation.RoomTypeId = (int)txtRoomType.SelectedValue;
 
-
-            if (btnAdd.Content.Equals("Add"))
-            {
-                roomInformationService.AddRoomInformation(roomInformation);
-            }
-            else
+            if (btnUpdate.Content.Equals("Update"))
             {
                 roomInformationService.UpdateRoomInformation(roomInformation);
             }
-
+       
             DialogResult = true;
             Close();
         }

@@ -76,7 +76,7 @@ namespace TranHuyHoangWPF
         {
             if (dgCustomers.SelectedItem is Customer selectedCustomer)
             {
-                var updateCustomerWindow = new AddCustomerWindow(selectedCustomer);
+                var updateCustomerWindow = new UpdateCustomerWindow(selectedCustomer);
                 if (updateCustomerWindow.ShowDialog() == true)
                 {
                     LoadCustomers();

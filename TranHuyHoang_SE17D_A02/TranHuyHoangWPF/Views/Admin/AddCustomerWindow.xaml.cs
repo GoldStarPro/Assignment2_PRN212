@@ -30,25 +30,12 @@ namespace TranHuyHoangWPF
             InitializeComponent();
             customer = new Customer();
             DataContext = customer;
-            btnUpdate.Content = "Add";
-            dptbBirthday.SelectedDate = DateTime.Today;
+            //dptbBirthday.SelectedDate = DateTime.Today;
         }
 
-        public AddCustomerWindow(Customer _customer)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-            customer = _customer;
-            DataContext = customer;
-            tbTitleAdd.Text = "Update Customer";
-            this.Title = "Update Customer";
-            lblPassword.Content = "Old Password";
-            lblConfirmPassword.Content = "New Password";
-            txtEmail.IsEnabled = false;
-        }
-
-        private void btnUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            if (btnUpdate.Content.ToString()!.Equals("Add"))
+            if (btnAdd.Content.ToString()!.Equals("Add"))
             {
                 if (txtOldPassword.Password != txtNewPassword.Password)
                 {
@@ -73,21 +60,6 @@ namespace TranHuyHoangWPF
             else if (!string.IsNullOrEmpty(txtOldPassword.Password) && !string.IsNullOrEmpty(txtOldPassword.Password) && !txtOldPassword.Password.Equals(customer.Password))
             {
                 MessageBox.Show("Password is incorrect", "Profile");
-            }
-            else
-            {
-                customer.CustomerFullName = txtFullName.Text.Trim();
-                customer.Telephone = txtPhone.Text.Trim();
-                customer.CustomerBirthday = DateOnly.FromDateTime(DateTime.Parse(dptbBirthday.Text.Trim()));
-
-                if (!string.IsNullOrEmpty(txtNewPassword.Password))
-                {
-                    customer.Password = txtNewPassword.Password;
-                }
-
-                customerService.UpdateCustomer(customer);
-
-                DialogResult = true;
             }
         }
 

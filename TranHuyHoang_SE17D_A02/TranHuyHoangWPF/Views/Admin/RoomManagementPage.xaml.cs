@@ -87,7 +87,7 @@ namespace TranHuyHoangWPF
         {
             if (dgRooms.SelectedItem is RoomInformation selectedRoom)
             {
-                var updateRoomWindow = new AddRoomInformationWindow(selectedRoom);
+                var updateRoomWindow = new UpdateRoomInformationWindow(selectedRoom);
                 if (updateRoomWindow.ShowDialog() == true)
                 {
                     LoadRooms();

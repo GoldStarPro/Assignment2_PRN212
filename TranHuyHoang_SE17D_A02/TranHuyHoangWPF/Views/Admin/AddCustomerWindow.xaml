@@ -63,7 +63,7 @@
             <ColumnDefinition Width="13*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="15,0,0,0">
-            <TextBlock Name="tbTitleAdd" Text="Add Customer" FontSize="30" FontWeight="SemiBold" Margin="0,10" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Text="Add Customer" FontSize="30" FontWeight="SemiBold" Margin="0,10" HorizontalAlignment="Center"></TextBlock>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Full Name"></Label>
                 <TextBox Name="txtFullName" Text="{Binding CustomerFullName}"></TextBox>
@@ -105,7 +105,7 @@
                 </PasswordBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Name="btnUpdate" Content="Update" Background="#6346f9" Click="btnUpdate_Click"></Button>
+                <Button Name="btnAdd" Content="Add" Background="#6346f9" Click="btnAdd_Click"></Button>
                 <Button Name="btnClose" Content="Close" Background="#D9462C" Click="btnClose_Click"></Button>
             </StackPanel>
         </StackPanel>
