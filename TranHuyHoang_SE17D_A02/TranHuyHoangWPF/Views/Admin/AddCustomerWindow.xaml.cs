@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace TranHuyHoangWPF
 {
     /// <summary>
-    /// Interaction logic for ProfileWindow.xaml
+    /// Interaction logic for AddCustomerWindow.xaml
     /// </summary>
     public partial class AddCustomerWindow : Window
     {
@@ -56,6 +56,13 @@ namespace TranHuyHoangWPF
             if (txtOldPassword.Password != txtcfPassword.Password)
             {
                 MessageBox.Show("Passwords do not match", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Kiểm tra email trùng lặp
+            if (customerService.GetCustomer(txtEmail.Text.Trim()) != null)
+            {
+                MessageBox.Show("Email already exists. Please use a different email.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
