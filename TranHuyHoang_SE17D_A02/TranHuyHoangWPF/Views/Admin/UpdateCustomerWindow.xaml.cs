@@ -31,6 +31,13 @@ namespace TranHuyHoangWPF
             customer = _customer;
             DataContext = customer;
             txtEmail.IsEnabled = false;
+
+            // Gán giá trị cho DatePicker nếu CustomerBirthday có giá trị
+            if (customer.CustomerBirthday != default)
+            {
+                dptbBirthday.SelectedDate = new DateTime(customer.CustomerBirthday.Value.Year, customer.CustomerBirthday.Value.Month, customer.CustomerBirthday.Value.Day);
+            }
+
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
