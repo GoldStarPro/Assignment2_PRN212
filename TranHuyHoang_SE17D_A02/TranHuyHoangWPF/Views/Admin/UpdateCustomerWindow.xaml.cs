@@ -35,7 +35,7 @@ namespace TranHuyHoangWPF
             // Gán giá trị cho DatePicker nếu CustomerBirthday có giá trị
             if (customer.CustomerBirthday != default)
             {
-                dptbBirthday.SelectedDate = new DateTime(customer.CustomerBirthday.Value.Year, customer.CustomerBirthday.Value.Month, customer.CustomerBirthday.Value.Day);
+                dptbBirthday.SelectedDate = new DateTime(customer.CustomerBirthday!.Value.Year, customer.CustomerBirthday.Value.Month, customer.CustomerBirthday.Value.Day);
             }
 
         }
