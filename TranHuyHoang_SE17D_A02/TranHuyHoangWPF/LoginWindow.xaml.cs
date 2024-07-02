@@ -40,12 +40,20 @@ namespace TranHuyHoangWPF
             var adminPassword = admin.GetProperty("password").GetString();
 
 
-            if (txtEmail.Text.Trim().Equals(adminEmail) && txtPassword.Password.Equals(adminPassword))
+            if (txtEmail.Text.Trim().Equals(adminEmail))
             {
-                var managementWindow = new ManagementWindow();
-                managementWindow.Show();
-                Close();
+                if (txtPassword.Password.Equals(adminPassword))
+                {
+                    var managementWindow = new ManagementWindow();
+                    managementWindow.Show();
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid email or password!", "Login", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
+
             else
             {
                 var customer = _customerService.GetCustomer(txtEmail.Text);
