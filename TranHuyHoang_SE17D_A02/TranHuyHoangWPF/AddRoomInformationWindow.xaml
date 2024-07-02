@@ -1,11 +1,11 @@
-﻿<Window x:Class="TranHuyHoangWPF.RoomInformationWindow"
+﻿<Window x:Class="TranHuyHoangWPF.AddRoomInformationWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TranHuyHoangWPF"
         mc:Ignorable="d"
-        Title="RoomInformationWindow" Height="540" Width="450"
+        Title="Add Room Information Window" Height="540" Width="450"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Label">
@@ -65,7 +65,7 @@
     </Window.Resources>
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-            <TextBlock Text="Room Information" FontSize="30" FontWeight="SemiBold" Margin="0,10"></TextBlock>
+            <TextBlock Name="tbTitleAdd" Text="Add Room" FontSize="30" FontWeight="SemiBold" Margin="0,10" HorizontalAlignment="Center"></TextBlock>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Room Number"></Label>
                 <TextBox Name="txtRoomNumber" Text="{Binding RoomNumber}"></TextBox>

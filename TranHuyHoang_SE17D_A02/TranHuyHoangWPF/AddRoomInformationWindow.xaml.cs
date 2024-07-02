@@ -17,16 +17,16 @@ using System.Windows.Shapes;
 namespace TranHuyHoangWPF
 {
     /// <summary>
-    /// Interaction logic for RoomInformationWindow.xaml
+    /// Interaction logic for AddRoomInformationWindow.xaml
     /// </summary>
-    public partial class RoomInformationWindow : Window
+    public partial class AddRoomInformationWindow : Window
     {
         private RoomInformation roomInformation;
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
         private readonly IRoomTypeService roomTypeService = new RoomTypeService();
 
 
-        public RoomInformationWindow()
+        public AddRoomInformationWindow()
         {
             InitializeComponent();
             roomInformation = new RoomInformation
@@ -42,12 +42,14 @@ namespace TranHuyHoangWPF
             txtRoomType.SelectedValuePath = "RoomTypeId";
         }
 
-        public RoomInformationWindow(RoomInformation _roomInformation)
+        public AddRoomInformationWindow(RoomInformation _roomInformation)
         {
             InitializeComponent();
             roomInformation = _roomInformation;
             DataContext = roomInformation;
 
+            this.Title = "Update Room Information Window";
+            tbTitleAdd.Text = "Update Room";
             txtRoomType.ItemsSource = roomTypeService.GetRoomTypes();
             txtRoomType.DisplayMemberPath = "RoomTypeName"; 
             txtRoomType.SelectedValuePath = "RoomTypeId"; 

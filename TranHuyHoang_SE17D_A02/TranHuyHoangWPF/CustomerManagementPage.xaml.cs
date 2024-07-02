@@ -76,8 +76,8 @@ namespace TranHuyHoangWPF
         {
             if (dgCustomers.SelectedItem is Customer selectedCustomer)
             {
-                var profileWindow = new ProfileWindow(selectedCustomer);
-                if (profileWindow.ShowDialog() == true)
+                var updateCustomerWindow = new AddCustomerWindow(selectedCustomer);
+                if (updateCustomerWindow.ShowDialog() == true)
                 {
                     LoadCustomers();
                 }
@@ -97,8 +97,8 @@ namespace TranHuyHoangWPF
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var profileWindow = new ProfileWindow();
-            if (profileWindow.ShowDialog() == true)
+            var addCustomerWindow = new AddCustomerWindow();
+            if (addCustomerWindow.ShowDialog() == true)
             {
                 LoadCustomers();
             }
