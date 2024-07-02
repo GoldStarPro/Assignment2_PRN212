@@ -89,7 +89,7 @@
                 </PasswordBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Confirm Password" Name="lblConfirmPassword"></Label>
+                <Label Content="New Password" Name="lblNewPassword"></Label>
                 <PasswordBox Name="txtNewPassword">
                     <PasswordBox.Template>
                         <ControlTemplate TargetType="{x:Type PasswordBox}">
