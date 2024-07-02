@@ -31,33 +31,18 @@ namespace TranHuyHoangWPF
             InitializeComponent();
             customer = _customer;
             DataContext = customer;
-            lblPassword.Content = "Old Password";
-            lblConfirmPassword.Content = "New Password";
             txtEmail.IsEnabled = false;
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            
-            if (!string.IsNullOrEmpty(txtOldPassword.Password) && !string.IsNullOrEmpty(txtOldPassword.Password) && !txtOldPassword.Password.Equals(customer.Password))
-            {
-                MessageBox.Show("Password is incorrect", "Profile");
-            }
-            else
-            {
-                customer.CustomerFullName = txtFullName.Text.Trim();
-                customer.Telephone = txtPhone.Text.Trim();
-                customer.CustomerBirthday = DateOnly.FromDateTime(DateTime.Parse(dptbBirthday.Text.Trim()));
+            customer.CustomerFullName = txtFullName.Text.Trim();
+            customer.Telephone = txtPhone.Text.Trim();
+            customer.CustomerBirthday = DateOnly.FromDateTime(DateTime.Parse(dptbBirthday.Text.Trim()));
 
-                if (!string.IsNullOrEmpty(txtNewPassword.Password))
-                {
-                    customer.Password = txtNewPassword.Password;
-                }
+            customerService.UpdateCustomer(customer);
 
-                customerService.UpdateCustomer(customer);
-
-                DialogResult = true;
-            }
+            DialogResult = true;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
