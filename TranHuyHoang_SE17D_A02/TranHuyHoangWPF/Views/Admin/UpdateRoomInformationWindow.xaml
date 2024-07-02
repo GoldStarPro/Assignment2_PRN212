@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TranHuyHoangWPF"
         mc:Ignorable="d"
-        Title="Update Room Information Window" Height="540" Width="450"
+        Title="Update Room Information Window" Height="480" Width="450"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Label">
@@ -85,10 +85,10 @@
                 <Label Content="Price"></Label>
                 <TextBox Name="txtPrice" Text="{Binding RoomPricePerDay}"></TextBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <!--<StackPanel Orientation="Horizontal">
                 <Label Content="Status"></Label>
                 <TextBox Name="txtStatus" Text="{Binding RoomStatus}"></TextBox>
-            </StackPanel>
+            </StackPanel>-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Name="btnUpdate" Content="Update" Background="#6346f9" Click="btnUpdate_Click"></Button>
                 <Button Name="btnClose" Content="Close" Background="#D9462C" Click="btnClose_Click"></Button>

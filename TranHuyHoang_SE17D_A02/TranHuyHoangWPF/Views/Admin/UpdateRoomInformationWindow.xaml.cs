@@ -33,8 +33,8 @@ namespace TranHuyHoangWPF
 
             this.Title = "Update Room Information Window";
             txtRoomType.ItemsSource = roomTypeService.GetRoomTypes();
-            txtRoomType.DisplayMemberPath = "RoomTypeName"; 
-            txtRoomType.SelectedValuePath = "RoomTypeId"; 
+            txtRoomType.DisplayMemberPath = "RoomTypeName";
+            txtRoomType.SelectedValuePath = "RoomTypeId";
             txtRoomType.SelectedValue = roomInformation.RoomTypeId;
         }
 
@@ -42,11 +42,8 @@ namespace TranHuyHoangWPF
         {
             roomInformation.RoomTypeId = (int)txtRoomType.SelectedValue;
 
-            if (btnUpdate.Content.Equals("Update"))
-            {
-                roomInformationService.UpdateRoomInformation(roomInformation);
-            }
-       
+            roomInformationService.UpdateRoomInformation(roomInformation);
+
             DialogResult = true;
             Close();
         }

@@ -25,7 +25,6 @@ namespace TranHuyHoangWPF
         private Customer customer;
         private readonly ICustomerService customerService = new CustomerService();
 
-
         public UpdateCustomerWindow(Customer _customer)
         {
             InitializeComponent();
