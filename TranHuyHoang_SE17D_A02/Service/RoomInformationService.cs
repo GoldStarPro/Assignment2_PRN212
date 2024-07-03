@@ -19,5 +19,6 @@ namespace Service
         public RoomInformation? GetRoomInformationById(int id) => RoomInformationDAO.GetRoomInformationByID(id);
 
         public void UpdateRoomInformation(RoomInformation roomInformation) => RoomInformationDAO.UpdateRoomInformation(roomInformation);
+        public void UpdateRoomStatus(int roomID, byte newStatus) => RoomInformationDAO.UpdateRoomStatus(roomID, newStatus);
     }
 }

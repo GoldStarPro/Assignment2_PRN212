@@ -59,7 +59,8 @@ namespace TranHuyHoangWPF
                         if (bookingDetails.FirstOrDefault(b => b.RoomId == room.RoomId && b.StartDate <= DateOnly.FromDateTime(DateTime.Now) &&
                                                                 b.EndDate >= DateOnly.FromDateTime(DateTime.Now)) != null)
                         {
-                            MessageBox.Show($"Room {room.RoomNumber} can't be deleted");
+                            // Update roomStatus to 2 (deleted)
+                            roomInformationService.UpdateRoomStatus(room.RoomId, 2);
                         }
                         else
                         {
