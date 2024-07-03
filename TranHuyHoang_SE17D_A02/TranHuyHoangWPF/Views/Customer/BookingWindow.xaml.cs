@@ -59,8 +59,12 @@ namespace TranHuyHoangWPF
         {
             if (cboRoomNumber.SelectedItem is RoomInformation room && dptbCheckIn.SelectedDate.HasValue && dptbCheckOut.SelectedDate.HasValue && decimal.Parse(txtTotalPrice.Text) > 0)
             {
+
+                int newBookingReservationId = reservationService.GenerateNewBookingReservationId();
+
                 var reservation = new BookingReservation
                 {
+                    BookingReservationId = newBookingReservationId,
                     BookingDate = DateOnly.FromDateTime(DateTime.Now),
                     CustomerId = _customer.CustomerId,
                     BookingStatus = 1,
@@ -87,6 +91,8 @@ namespace TranHuyHoangWPF
                 MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {

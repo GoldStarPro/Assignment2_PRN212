@@ -56,5 +56,14 @@ namespace DataAccessLayer
             using var context = new FuminiHotelManagementContext();
             return context.BookingReservations.FirstOrDefault(x => x.BookingReservationId == id);
         }
+
+        public static int GenerateNewBookingReservationId()
+        {
+            using (var context = new FuminiHotelManagementContext())
+            {
+                var maxId = context.BookingReservations.Max(b => (int?)b.BookingReservationId) ?? 0;
+                return maxId + 1;
+            }
+        }
     }
 }

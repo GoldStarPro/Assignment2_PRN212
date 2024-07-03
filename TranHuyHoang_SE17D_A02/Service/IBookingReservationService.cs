@@ -14,5 +14,6 @@ namespace Service
         void AddBookingReservation(BookingReservation reservation);
         void UpdateBookingReservation(BookingReservation reservation);
         void DeleteBookingReservation(int id);
+        int GenerateNewBookingReservationId();
     }
 }
