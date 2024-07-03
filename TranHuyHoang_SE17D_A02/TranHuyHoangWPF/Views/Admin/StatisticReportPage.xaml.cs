@@ -48,17 +48,45 @@ namespace TranHuyHoangWPF
             LoadReservationList();            
         }
 
+        //private void LoadReservationList()
+        //{
+        //    BookingReservations = bookingReservationService.GetBookingReservations().Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!)).ToList();
+
+        //    dgReservations.ItemsSource = null;
+        //    dgReservations.ItemsSource = BookingReservations;
+
+        //    //txtRevenue.Text = BookingReservations.Sum(br => br.TotalPrice).ToString();
+        //    //txtDays.Text = ((DateTime)dpEndDate.SelectedDate! - (DateTime)dpStartDate.SelectedDate!).TotalDays.ToString();
+        //    //txtReservations.Text = BookingReservations.Count.ToString();
+        //}
+
         private void LoadReservationList()
         {
-            BookingReservations = bookingReservationService.GetBookingReservations().Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!)).ToList();
+            var reservations = bookingReservationService.GetBookingReservations()
+                .Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!))
+                .ToList();
 
-            dgReservations.ItemsSource = null;
-            dgReservations.ItemsSource = BookingReservations;
+            var bookingDetails = new List<dynamic>();
 
-            //txtRevenue.Text = BookingReservations.Sum(br => br.TotalPrice).ToString();
-            //txtDays.Text = ((DateTime)dpEndDate.SelectedDate! - (DateTime)dpStartDate.SelectedDate!).TotalDays.ToString();
-            //txtReservations.Text = BookingReservations.Count.ToString();
+            foreach (var reservation in reservations)
+            {
+                foreach (var detail in reservation.BookingDetails)
+                {
+                    bookingDetails.Add(new
+                    {
+                        RoomNumber = detail.Room.RoomNumber,
+                        Customer = reservation.Customer.CustomerFullName,
+                        BookingDate = reservation.BookingDate,
+                        StartDate = detail.StartDate,
+                        EndDate = detail.EndDate
+                    });
+                }
+            }
+
+            dgReservations.ItemsSource = bookingDetails;
+
         }
+
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
