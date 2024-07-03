@@ -56,11 +56,41 @@ namespace TranHuyHoangWPF
             Close();
         }
 
+        //private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    string searchText = txtSearchRoomNumber.Text.Trim();
+        //    dgReservations.ItemsSource = Reservations.Where(r => r.CustomerId == _customer.CustomerId && r.BookingDetails.ElementAt(0).Room.RoomNumber.Contains(searchText)).ToList();
+        //}
+
         private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = txtSearchRoomNumber.Text.Trim();
-            dgReservations.ItemsSource = Reservations.Where(r => r.CustomerId == _customer.CustomerId && r.BookingDetails.ElementAt(0).Room.RoomNumber.Contains(searchText)).ToList();
+            var reservations = reservationService.GetBookingReservations()
+                .Where(r => r.CustomerId == _customer.CustomerId)
+                .ToList();
+
+            var bookingDetails = new List<dynamic>();
+
+            foreach (var reservation in reservations)
+            {
+                foreach (var detail in reservation.BookingDetails)
+                {
+                    if (detail.Room.RoomNumber.Contains(searchText))
+                    {
+                        bookingDetails.Add(new
+                        {
+                            RoomNumber = detail.Room.RoomNumber,
+                            BookingDate = reservation.BookingDate,
+                            StartDate = detail.StartDate,
+                            EndDate = detail.EndDate
+                        });
+                    }
+                }
+            }
+
+            dgReservations.ItemsSource = bookingDetails;
         }
+
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -72,13 +102,39 @@ namespace TranHuyHoangWPF
             }
         }
 
+        //private void LoadReservations()
+        //{
+        //    Reservations = reservationService.GetBookingReservations().Where(r => r.CustomerId == _customer.CustomerId).ToList();
+
+        //    dgReservations.ItemsSource = null;
+        //    dgReservations.ItemsSource = Reservations;
+        //}
+
         private void LoadReservations()
         {
-            Reservations = reservationService.GetBookingReservations().Where(r => r.CustomerId == _customer.CustomerId).ToList();
+            var reservations = reservationService.GetBookingReservations()
+                .Where(r => r.CustomerId == _customer.CustomerId)
+                .ToList();
 
-            dgReservations.ItemsSource = null;
-            dgReservations.ItemsSource = Reservations;
+            var bookingDetails = new List<dynamic>();
+
+            foreach (var reservation in reservations)
+            {
+                foreach (var detail in reservation.BookingDetails)
+                {
+                    bookingDetails.Add(new
+                    {
+                        RoomNumber = detail.Room.RoomNumber,
+                        BookingDate = reservation.BookingDate,
+                        StartDate = detail.StartDate,
+                        EndDate = detail.EndDate
+                    });
+                }
+            }
+
+            dgReservations.ItemsSource = bookingDetails;
         }
+
 
     }
 }

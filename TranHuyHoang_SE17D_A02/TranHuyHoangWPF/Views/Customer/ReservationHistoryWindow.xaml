@@ -63,9 +63,14 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Room Number" Binding="{Binding BookingDetails[0].Room.RoomNumber}" Width="2*" IsReadOnly="True"/>
+                <!--<DataGridTextColumn Header="Room Number" Binding="{Binding BookingDetails[0].Room.RoomNumber}" Width="2*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate, StringFormat={}{0:dd/MM/yyyy}}" Width="4*" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="3*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="3*" IsReadOnly="True"/>-->
+
+                <DataGridTextColumn Header="Room Number" Binding="{Binding RoomNumber}" Width="2*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate, StringFormat={}{0:dd/MM/yyyy}}" Width="3*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate, StringFormat={}{0:dd/MM/yyyy}}" Width="3*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, StringFormat={}{0:dd/MM/yyyy}}" Width="3*" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
