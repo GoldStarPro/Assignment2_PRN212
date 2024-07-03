@@ -46,6 +46,7 @@ namespace TranHuyHoangWPF
             customer.Telephone = txtPhone.Text.Trim();
             customer.CustomerBirthday = DateOnly.FromDateTime(DateTime.Parse(dptbBirthday.Text.Trim()));
 
+            customer.CustomerStatus = 1;
             customerService.UpdateCustomer(customer);
 
             DialogResult = true;

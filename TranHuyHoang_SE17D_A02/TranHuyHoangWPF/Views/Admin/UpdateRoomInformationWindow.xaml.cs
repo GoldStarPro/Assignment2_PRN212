@@ -42,6 +42,8 @@ namespace TranHuyHoangWPF
         {
             roomInformation.RoomTypeId = (int)txtRoomType.SelectedValue;
 
+            roomInformation.RoomStatus = 1;
+
             roomInformationService.UpdateRoomInformation(roomInformation);
 
             DialogResult = true;
