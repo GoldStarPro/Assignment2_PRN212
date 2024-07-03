@@ -21,7 +21,7 @@ namespace TranHuyHoangWPF
     /// </summary>
     public partial class BookingWindow : Window
     {
-        private Customer _customer;
+        private Customer _customer = new Customer();
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
         private readonly IBookingReservationService reservationService = new BookingReservationService();
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();

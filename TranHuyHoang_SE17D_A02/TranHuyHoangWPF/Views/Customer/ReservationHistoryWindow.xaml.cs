@@ -25,9 +25,8 @@ namespace TranHuyHoangWPF
         private Customer _customer;
         private readonly IBookingReservationService reservationService = new BookingReservationService();
         private readonly ICustomerService customerService = new CustomerService();
-        private readonly IRoomInformationService roomInformationService = new RoomInformationService();
 
-        public List<BookingReservation> Reservations { get; set; }
+        public List<BookingReservation> Reservations { get; set; } = new List<BookingReservation>();
 
         public ReservationHistoryWindow(Customer customer)
         {

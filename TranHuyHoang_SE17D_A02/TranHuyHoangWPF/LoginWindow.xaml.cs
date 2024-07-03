@@ -22,7 +22,7 @@ namespace TranHuyHoangWPF
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private readonly ICustomerService _customerService = new CustomerService();
+        private readonly CustomerService _customerService = new CustomerService();
 
         public LoginWindow()
         {

@@ -22,7 +22,7 @@ namespace TranHuyHoangWPF
     /// </summary>
     public partial class StatisticReportPage : Page
     {
-        public List<BookingReservation> BookingReservations { get; set; }
+        public List<BookingReservation> BookingReservations { get; set; } = new List<BookingReservation>();
 
         private readonly IBookingReservationService bookingReservationService = new BookingReservationService();
 
@@ -43,9 +43,10 @@ namespace TranHuyHoangWPF
             LoadReservationList();
         }
 
-        private void UpdateReport(object sender, SelectionChangedEventArgs e)
+        private void UpdateReport(object? sender, SelectionChangedEventArgs? e)
         {
-            LoadReservationList();            
+            if (sender == null || e == null) return;
+            LoadReservationList();
         }
 
         //private void LoadReservationList()
@@ -62,6 +63,9 @@ namespace TranHuyHoangWPF
 
         private void LoadReservationList()
         {
+            if (dpStartDate.SelectedDate == null || dpEndDate.SelectedDate == null)
+                return;
+
             var reservations = bookingReservationService.GetBookingReservations()
                 .Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!))
                 .ToList();

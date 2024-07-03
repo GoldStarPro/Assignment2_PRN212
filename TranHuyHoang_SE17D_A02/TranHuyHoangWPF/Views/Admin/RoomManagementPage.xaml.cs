@@ -24,7 +24,7 @@ namespace TranHuyHoangWPF
     {
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
-        public List<RoomInformation> RoomInformations { get; set; }
+        public List<RoomInformation> RoomInformations { get; set; } = new List<RoomInformation>();
 
         public RoomManagementPage()
         {
