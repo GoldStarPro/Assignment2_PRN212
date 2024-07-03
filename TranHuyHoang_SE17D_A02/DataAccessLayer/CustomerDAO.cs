@@ -53,7 +53,8 @@ namespace DataAccessLayer
             Customer? existingCustomer = context.Customers.FirstOrDefault(c => c.CustomerId == customerID);
             if (existingCustomer != null)
             {
-                existingCustomer.CustomerStatus = 2;
+                //existingCustomer.CustomerStatus = 2;
+                context.Customers.Remove(existingCustomer);
                 context.SaveChanges();
             }
         }
