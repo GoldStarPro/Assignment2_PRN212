@@ -59,8 +59,7 @@ namespace TranHuyHoangWPF
         {
             if (cboRoomNumber.SelectedItem is RoomInformation room && dptbCheckIn.SelectedDate.HasValue && dptbCheckOut.SelectedDate.HasValue && decimal.Parse(txtTotalPrice.Text) > 0)
             {
-
-                int newBookingReservationId = reservationService.GenerateNewBookingReservationId();
+                int newBookingReservationId = reservationService.GenerateNewBookingReservationId(_customer.CustomerId);
 
                 var reservation = new BookingReservation
                 {
@@ -71,28 +70,55 @@ namespace TranHuyHoangWPF
                     TotalPrice = decimal.Parse(txtTotalPrice.Text)
                 };
 
-                var bookingDetail = new BookingDetail
+                // Kiểm tra nếu đã có BookingReservationID này trong database
+                var existingReservation = reservationService.GetBookingReservationById(reservation.BookingReservationId);
+                if (existingReservation != null)
                 {
-                    BookingReservationId = reservation.BookingReservationId,
-                    RoomId = room.RoomId,
-                    StartDate = DateOnly.FromDateTime(dptbCheckIn.SelectedDate.Value),
-                    EndDate = DateOnly.FromDateTime(dptbCheckOut.SelectedDate.Value),
-                    ActualPrice = decimal.Parse(txtActualPrice.Text)
-                };
+                    // Cập nhật lại TotalPrice
+                    existingReservation.TotalPrice += reservation.TotalPrice;
+                    reservationService.UpdateBookingReservation(existingReservation);
 
-                reservationService.AddBookingReservation(reservation);
-                bookingDetailService.AddBookingDetail(bookingDetail);
+                    var bookingDetailu = new BookingDetail
+                    {
+                        BookingReservationId = reservation.BookingReservationId,
+                        RoomId = room.RoomId,
+                        StartDate = DateOnly.FromDateTime(dptbCheckIn.SelectedDate.Value),
+                        EndDate = DateOnly.FromDateTime(dptbCheckOut.SelectedDate.Value),
+                        ActualPrice = decimal.Parse(txtActualPrice.Text)
+                    };
+
+                    bookingDetailService.AddBookingDetail(bookingDetailu);
+                }
+
+                else
+                {
+                    var bookingDetail = new BookingDetail
+                    {
+                        BookingReservationId = reservation.BookingReservationId,
+                        RoomId = room.RoomId,
+                        StartDate = DateOnly.FromDateTime(dptbCheckIn.SelectedDate.Value),
+                        EndDate = DateOnly.FromDateTime(dptbCheckOut.SelectedDate.Value),
+                        ActualPrice = decimal.Parse(txtActualPrice.Text)
+                    };
+
+                    reservationService.AddBookingReservation(reservation);
+                    bookingDetailService.AddBookingDetail(bookingDetail);
+                }
+
+                LoadRoomList();
+
                 DialogResult = true;
-
                 Close();
             }
+
             else
             {
                 MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        
+
+
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {

@@ -57,13 +57,30 @@ namespace DataAccessLayer
             return context.BookingReservations.FirstOrDefault(x => x.BookingReservationId == id);
         }
 
-        public static int GenerateNewBookingReservationId()
+        public static int GenerateNewBookingReservationId(int customerId)
         {
             using (var context = new FuminiHotelManagementContext())
             {
-                var maxId = context.BookingReservations.Max(b => (int?)b.BookingReservationId) ?? 0;
-                return maxId + 1;
+                // Lấy ngày hôm nay
+                DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+
+                // Tìm BookingReservation của khách hàng trong ngày hôm nay
+                var existingReservation = context.BookingReservations
+                    .FirstOrDefault(b => b.CustomerId == customerId && b.BookingDate == today);
+
+                if (existingReservation != null)
+                {
+                    // Nếu có, trả về BookingReservationId hiện tại
+                    return existingReservation.BookingReservationId;
+                }
+                else
+                {
+                    // Nếu không có, tạo mới BookingReservationId dựa trên giá trị lớn nhất hiện tại
+                    var maxId = context.BookingReservations.Max(b => (int?)b.BookingReservationId) ?? 0;
+                    return maxId + 1;
+                }
             }
         }
+
     }
 }
