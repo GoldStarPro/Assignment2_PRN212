@@ -34,7 +34,7 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Orientation="Vertical">
+        <StackPanel Grid.Column="0" Orientation="Vertical" Background="DarkGray">
             <Button Name="btnCustomer" Content="Customer Management" Click="btnCustomer_Click"></Button>
             <Button Name="btnRoom" Content="Room Management" Click="btnRoom_Click"></Button>
             <Button Name="btnReport" Content="Statistic Report" Click="btnReport_Click"></Button>

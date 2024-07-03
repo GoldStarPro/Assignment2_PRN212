@@ -38,5 +38,6 @@ namespace TranHuyHoangWPF
         {
             frm.Source = new Uri("StatisticReportPage.xaml", UriKind.Relative);
         }
+
     }
 }
