@@ -21,12 +21,15 @@ namespace TranHuyHoangWPF.Views.User
     /// </summary>
     public partial class ReservationHistoryDetailsWindow : Window
     {
+        private int _bookingReservationId;
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
+        private readonly IBookingReservationService reservationService = new BookingReservationService();
 
         public ReservationHistoryDetailsWindow(int bookingReservationId)
         {
             InitializeComponent();
             DataContext = this;
+            _bookingReservationId = bookingReservationId;
             LoadReservationHistoryDetails(bookingReservationId);
         }
 
@@ -54,5 +57,37 @@ namespace TranHuyHoangWPF.Views.User
             dgReservationHistoryDetails.ItemsSource = reservationHistoryDetails;
 
         }
+
+        private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = txtSearchRoomNumber.Text.Trim();
+            var reservations = reservationService.GetBookingReservations()
+                .Where(r => r.BookingReservationId == _bookingReservationId)
+                .ToList();
+
+            var bookingDetails = new List<dynamic>();
+
+            foreach (var reservation in reservations)
+            {
+                foreach (var detail in reservation.BookingDetails)
+                {
+                    if (detail.Room.RoomNumber.Contains(searchText))
+                    {
+                        bookingDetails.Add(new
+                        {
+                            BookingReservationId = detail.BookingReservationId,
+                            RoomNumber = detail.Room.RoomNumber,
+                            StartDate = detail.StartDate,
+                            EndDate = detail.EndDate,
+                            ActualPrice = detail.ActualPrice,
+                        });
+                    }
+                }
+            }
+
+            dgReservationHistoryDetails.ItemsSource = null;
+            dgReservationHistoryDetails.ItemsSource = bookingDetails;
+        }
+
     }
 }

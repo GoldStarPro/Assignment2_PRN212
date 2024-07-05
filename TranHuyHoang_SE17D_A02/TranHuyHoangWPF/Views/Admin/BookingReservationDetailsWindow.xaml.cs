@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using BusinessObject;
 using Repository;
 using Service;
@@ -13,12 +14,15 @@ namespace TranHuyHoangWPF.Views.Admin
     /// </summary>
     public partial class BookingReservationDetailsWindow : Window
     {
+        private int _bookingReservationId;
+        private readonly IBookingReservationService reservationService = new BookingReservationService();
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
 
         public BookingReservationDetailsWindow(int bookingReservationId)
         {
             InitializeComponent();
             DataContext = this;
+            _bookingReservationId = bookingReservationId;
             LoadBookingReservationDetails(bookingReservationId);
         }
 
@@ -46,5 +50,37 @@ namespace TranHuyHoangWPF.Views.Admin
             dgBookingDetails.ItemsSource = bookingDetails;
 
         }
+
+        private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = txtSearchRoomNumber.Text.Trim();
+            var reservations = reservationService.GetBookingReservations()
+                .Where(r => r.BookingReservationId == _bookingReservationId)
+                .ToList();
+
+            var bookingDetails = new List<dynamic>();
+
+            foreach (var reservation in reservations)
+            {
+                foreach (var detail in reservation.BookingDetails)
+                {
+                    if (detail.Room.RoomNumber.Contains(searchText))
+                    {
+                        bookingDetails.Add(new
+                        {
+                            BookingReservationId = detail.BookingReservationId,
+                            RoomNumber = detail.Room.RoomNumber,
+                            StartDate = detail.StartDate,
+                            EndDate = detail.EndDate,
+                            ActualPrice = detail.ActualPrice,
+                        });
+                    }
+                }
+            }
+
+            dgBookingDetails.ItemsSource = null;
+            dgBookingDetails.ItemsSource = bookingDetails;
+        }
+
     }
 }

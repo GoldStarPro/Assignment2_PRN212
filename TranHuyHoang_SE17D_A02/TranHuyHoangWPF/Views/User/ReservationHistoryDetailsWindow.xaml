@@ -5,10 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TranHuyHoangWPF.Views.User"
         mc:Ignorable="d"
-        Title="Reservation History Details Window" Height="450" Width="900"
+        Title="Reservation History Details Window" Height="500" Width="1100"
         WindowStartupLocation="CenterScreen">
+
     <Grid>
-        <DataGrid Name="dgReservationHistoryDetails" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10*" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" LastChildFill="False" Margin="20, 0">
+            <TextBlock DockPanel.Dock="Left" Text="Reservations Details" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
+        </DockPanel>
+        <DockPanel Grid.Row="1" LastChildFill="False" Margin="20, 0">
+            <TextBox Name="txtSearchRoomNumber" DockPanel.Dock="Left" Height="35" Width="250" TextWrapping="WrapWithOverflow" VerticalContentAlignment="Center" Padding="10, 0" FontSize="14" FontStyle="Italic" TextChanged="txtSearchRoomNumber_TextChanged">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Style.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20" />
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+        </DockPanel>
+
+        <DataGrid Grid.Row="2" Name="dgReservationHistoryDetails" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0" Background="Transparent">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Padding" Value="10, 15" />
@@ -24,5 +47,6 @@
                 <DataGridTextColumn Header="Actual Price" Binding="{Binding ActualPrice}" Width="3*" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
+
     </Grid>
 </Window>

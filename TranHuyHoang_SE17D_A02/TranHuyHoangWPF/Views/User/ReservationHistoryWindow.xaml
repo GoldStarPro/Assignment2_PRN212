@@ -13,12 +13,16 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" LastChildFill="False" Margin="20, 0">
-            <TextBlock DockPanel.Dock="Left" Text="Reservations" VerticalAlignment="Center" FontSize="30" FontWeight="DemiBold"/>
-            <Button DockPanel.Dock="Right" Name="btnLogout" Click="btnLogout_Click" Background="Transparent" Width="40" Height="40" BorderThickness="0">
-                <Image Source="/Assets/logout.png" Width="16" Height="16"/>
-            </Button>
-            <Button DockPanel.Dock="Right" Name="btnProfile" Click="btnProfile_Click" Width="120" Height="40" Background="#F7F9F7" BorderThickness="0">
+        
+        <Grid Grid.Row="0" Margin="20, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Reservations" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="DemiBold" Grid.Column="0"/>
+            <Button Name="btnProfile" Click="btnProfile_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" Height="40" Background="#F7F9F7" BorderThickness="0" Grid.Column="1">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}">
                         <Style.Resources>
@@ -29,19 +33,13 @@
                     </Style>
                 </Button.Resources>
             </Button>
-        </DockPanel>
+            <Button Name="btnLogout" Click="btnLogout_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Width="40" Height="40" BorderThickness="0" Grid.Column="2">
+                <Image Source="/Assets/logout.png" Width="16" Height="16"/>
+            </Button>
+        </Grid>
+
         <DockPanel Grid.Row="1" LastChildFill="False" Margin="20, 0">
-            <TextBox Name="txtSearchRoomNumber" DockPanel.Dock="Left" Height="40" Width="320" TextWrapping="WrapWithOverflow" VerticalContentAlignment="Center" Padding="10, 0" FontSize="14" FontStyle="Italic" TextChanged="txtSearchRoomNumber_TextChanged">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type TextBox}">
-                        <Style.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="20" />
-                            </Style>
-                        </Style.Resources>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
+            
             <Button DockPanel.Dock="Right" Name="btnAdd" Content="Add Booking" Foreground="White" Background="#56A661" Width="120" Height="40" FontSize="14" Click="btnAdd_Click">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}">

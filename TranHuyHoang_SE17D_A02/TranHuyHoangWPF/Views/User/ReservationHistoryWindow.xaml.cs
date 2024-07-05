@@ -56,36 +56,6 @@ namespace TranHuyHoangWPF.Views.User
             Close();
         }
 
-        private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string searchText = txtSearchRoomNumber.Text.Trim();
-            var reservations = reservationService.GetBookingReservations()
-                .Where(r => r.CustomerId == _customer.CustomerId)
-                .ToList();
-
-            var bookingDetails = new List<dynamic>();
-
-            foreach (var reservation in reservations)
-            {
-                foreach (var detail in reservation.BookingDetails)
-                {
-                    if (detail.Room.RoomNumber.Contains(searchText))
-                    {
-                        bookingDetails.Add(new
-                        {
-                            RoomNumber = detail.Room.RoomNumber,
-                            BookingDate = reservation.BookingDate,
-                            TotalPrice = reservation.TotalPrice,
-                            BookingStatus = reservation.BookingStatus,
-                        });
-                    }
-                }
-            }
-
-            dgReservations.ItemsSource = bookingDetails;
-        }
-
-
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             var bookingWindow = new BookingWindow(_customer);
@@ -95,14 +65,6 @@ namespace TranHuyHoangWPF.Views.User
                 LoadReservations();
             }
         }
-
-        //private void LoadReservations()
-        //{
-        //    Reservations = reservationService.GetBookingReservations().Where(r => r.CustomerId == _customer.CustomerId).ToList();
-
-        //    dgReservations.ItemsSource = null;
-        //    dgReservations.ItemsSource = Reservations;
-        //}
 
         private void LoadReservations()
         {
