@@ -56,12 +56,6 @@ namespace TranHuyHoangWPF.Views.User
             Close();
         }
 
-        //private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    string searchText = txtSearchRoomNumber.Text.Trim();
-        //    dgReservations.ItemsSource = Reservations.Where(r => r.CustomerId == _customer.CustomerId && r.BookingDetails.ElementAt(0).Room.RoomNumber.Contains(searchText)).ToList();
-        //}
-
         private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = txtSearchRoomNumber.Text.Trim();
@@ -81,8 +75,8 @@ namespace TranHuyHoangWPF.Views.User
                         {
                             RoomNumber = detail.Room.RoomNumber,
                             BookingDate = reservation.BookingDate,
-                            StartDate = detail.StartDate,
-                            EndDate = detail.EndDate
+                            TotalPrice = reservation.TotalPrice,
+                            BookingStatus = reservation.BookingStatus,
                         });
                     }
                 }
