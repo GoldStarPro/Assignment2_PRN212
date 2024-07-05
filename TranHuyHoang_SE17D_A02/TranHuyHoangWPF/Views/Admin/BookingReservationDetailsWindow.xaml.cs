@@ -13,7 +13,6 @@ namespace TranHuyHoangWPF.Views.Admin
     /// </summary>
     public partial class BookingReservationDetailsWindow : Window
     {
-        private readonly IBookingReservationService bookingReservationService = new BookingReservationService();
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
 
         public BookingReservationDetailsWindow(int bookingReservationId)

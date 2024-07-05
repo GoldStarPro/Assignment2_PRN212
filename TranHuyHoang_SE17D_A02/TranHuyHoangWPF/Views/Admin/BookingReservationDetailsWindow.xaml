@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TranHuyHoangWPF.Views.Admin"
         mc:Ignorable="d"
-        Title="Booking Reservation Details Window" Height="450" Width="800"
+        Title="Booking Reservation Details Window" Height="450" Width="900"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <DataGrid Name="dgBookingDetails" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0">
