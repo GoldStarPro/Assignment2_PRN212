@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.Admin
 {
     /// <summary>
     /// Interaction logic for StaticReportPage.xaml
@@ -70,24 +70,22 @@ namespace TranHuyHoangWPF
                 .Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!))
                 .ToList();
 
-            var bookingDetails = new List<dynamic>();
+            var bookingReservations = new List<dynamic>();
 
             foreach (var reservation in reservations)
             {
-                foreach (var detail in reservation.BookingDetails)
-                {
-                    bookingDetails.Add(new
+                bookingReservations.Add(new
                     {
-                        RoomNumber = detail.Room.RoomNumber,
-                        Customer = reservation.Customer.CustomerFullName,
+                        BookingReservationId = reservation.BookingReservationId,
                         BookingDate = reservation.BookingDate,
-                        StartDate = detail.StartDate,
-                        EndDate = detail.EndDate
+                        TotalPrice = reservation.TotalPrice,
+                        CustomerFullName = reservation.Customer.CustomerFullName,
+                        BookingStatus = reservation.BookingStatus,
                     });
-                }
             }
 
-            dgReservations.ItemsSource = bookingDetails;
+            dgReservations.ItemsSource = null;
+            dgReservations.ItemsSource = bookingReservations;
 
         }
 
@@ -98,5 +96,15 @@ namespace TranHuyHoangWPF
             loginWindow.Show();
             Window.GetWindow(this).Close();
         }
+
+        private void ViewDetail_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int bookingReservationId)
+            {
+                var bookingReservationDetailsWindow = new BookingReservationDetailsWindow(bookingReservationId);
+                bookingReservationDetailsWindow.ShowDialog();
+            }
+        }
+
     }
 }
