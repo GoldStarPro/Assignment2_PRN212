@@ -14,8 +14,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TranHuyHoangWPF.Views.Admin;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.User
 {
     /// <summary>
     /// Interaction logic for ReservationHistoryWindow.xaml
@@ -134,6 +135,15 @@ namespace TranHuyHoangWPF
             dgReservations.ItemsSource = bookingDetails;
         }
 
+
+        private void ViewDetail_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int reservationHistoryId)
+            {
+                var reservationHistoryDetailsWindow = new ReservationHistoryDetailsWindow(reservationHistoryId);
+                reservationHistoryDetailsWindow.ShowDialog();
+            }
+        }
 
     }
 }
