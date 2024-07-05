@@ -1,4 +1,5 @@
-﻿using Service;
+﻿using BusinessObject;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,18 +23,18 @@ namespace TranHuyHoangWPF.Views.User
     {
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
 
-        public ReservationHistoryDetailsWindow(int reservationHistoryId)
+        public ReservationHistoryDetailsWindow(int bookingReservationId)
         {
             InitializeComponent();
             DataContext = this;
-            LoadReservationHistoryDetails(reservationHistoryId);
+            LoadReservationHistoryDetails(bookingReservationId);
         }
 
-        private void LoadReservationHistoryDetails(int reservationHistoryId)
+        private void LoadReservationHistoryDetails(int bookingReservationId)
         {
 
             var details = bookingDetailService.GetBookingDetails()
-                .Where(bd => bd.BookingReservationId == reservationHistoryId)
+                .Where(bd => bd.BookingReservationId == bookingReservationId)
                 .ToList();
             var reservationHistoryDetails = new List<dynamic>();
 

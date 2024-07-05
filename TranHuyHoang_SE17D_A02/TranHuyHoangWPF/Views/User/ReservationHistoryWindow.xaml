@@ -64,6 +64,9 @@
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
 
+                <DataGridTextColumn Header="Booking Reservation ID" Binding="{Binding BookingReservationId}" Width="3*" IsReadOnly="True" Visibility="Collapsed"/>
+                
+                <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerFullName}" Width="3*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate, StringFormat={}{0:dd/MM/yyyy}}" Width="3*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="3*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding BookingStatus}" Width="2*" IsReadOnly="True"/>
@@ -72,10 +75,11 @@
                 <DataGridTemplateColumn Header="Detail" Width="2*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="View Detail" Click="ViewDetail_Click" Tag="{Binding BookingReservationId}" />
+                            <Button Content="View Detail" Click="ViewHistoryDetail_Click" Tag="{Binding BookingReservationId}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -116,31 +116,29 @@ namespace TranHuyHoangWPF.Views.User
                 .Where(r => r.CustomerId == _customer.CustomerId)
                 .ToList();
 
-            var bookingDetails = new List<dynamic>();
+            var bookingReservations = new List<dynamic>();
 
             foreach (var reservation in reservations)
             {
-                foreach (var detail in reservation.BookingDetails)
+                bookingReservations.Add(new
                 {
-                    bookingDetails.Add(new
-                    {
-                        RoomNumber = detail.Room.RoomNumber,
-                        BookingDate = reservation.BookingDate,
-                        StartDate = detail.StartDate,
-                        EndDate = detail.EndDate
-                    });
-                }
+                    BookingReservationId = reservation.BookingReservationId,
+                    CustomerFullName = reservation.Customer.CustomerFullName,
+                    BookingDate = reservation.BookingDate,
+                    TotalPrice = reservation.TotalPrice,
+                    BookingStatus = reservation.BookingStatus
+                });
             }
 
-            dgReservations.ItemsSource = bookingDetails;
+            dgReservations.ItemsSource = bookingReservations;
         }
 
 
-        private void ViewDetail_Click(object sender, RoutedEventArgs e)
+        private void ViewHistoryDetail_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.Tag is int reservationHistoryId)
+            if (sender is Button button && button.Tag is int bookingReservationId)
             {
-                var reservationHistoryDetailsWindow = new ReservationHistoryDetailsWindow(reservationHistoryId);
+                var reservationHistoryDetailsWindow = new ReservationHistoryDetailsWindow(bookingReservationId);
                 reservationHistoryDetailsWindow.ShowDialog();
             }
         }

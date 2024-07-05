@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TranHuyHoangWPF.Views.User"
         mc:Ignorable="d"
-        Title="Reservation History Details Window" Height="450" Width="900">
+        Title="Reservation History Details Window" Height="450" Width="900"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <DataGrid Name="dgReservationHistoryDetails" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0">
             <DataGrid.ColumnHeaderStyle>
