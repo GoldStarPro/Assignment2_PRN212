@@ -17,7 +17,8 @@
             <TextBlock DockPanel.Dock="Left" Text="Reservations Details" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
         </DockPanel>
         <DockPanel Grid.Row="1" LastChildFill="False" Margin="20, 0">
-            <TextBox Name="txtSearchRoomNumber" DockPanel.Dock="Left" Height="35" Width="250" TextWrapping="WrapWithOverflow" VerticalContentAlignment="Center" Padding="10, 0" FontSize="14" FontStyle="Italic" TextChanged="txtSearchRoomNumber_TextChanged">
+            <TextBox Name="txtSearchRoomNumber" DockPanel.Dock="Left" Height="35" Width="250" TextWrapping="WrapWithOverflow" VerticalContentAlignment="Center" Padding="10, 0" FontSize="14" FontStyle="Italic" 
+                     TextChanged="txtSearchRoomNumber_TextChanged">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type TextBox}">
                         <Style.Resources>
@@ -30,7 +31,7 @@
             </TextBox>
         </DockPanel>
 
-        <DataGrid Grid.Row="2" Name="dgBookingDetails" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0" Background="Transparent">
+        <DataGrid Grid.Row="2" Name="dgBookingDetails" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0" Background="Transparent" CanUserAddRows="False">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Padding" Value="10, 15" />

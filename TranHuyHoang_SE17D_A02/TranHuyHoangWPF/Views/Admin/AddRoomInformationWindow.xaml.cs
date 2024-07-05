@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.Admin
 {
     /// <summary>
     /// Interaction logic for AddRoomInformationWindow.xaml

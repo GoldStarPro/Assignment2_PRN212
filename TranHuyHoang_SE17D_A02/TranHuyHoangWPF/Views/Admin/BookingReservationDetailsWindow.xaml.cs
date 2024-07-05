@@ -17,6 +17,7 @@ namespace TranHuyHoangWPF.Views.Admin
         private int _bookingReservationId;
         private readonly IBookingReservationService reservationService = new BookingReservationService();
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
+        public List<BookingDetail> BookingDetails { get; set; } = new List<BookingDetail>();
 
         public BookingReservationDetailsWindow(int bookingReservationId)
         {
@@ -25,6 +26,22 @@ namespace TranHuyHoangWPF.Views.Admin
             _bookingReservationId = bookingReservationId;
             LoadBookingReservationDetails(bookingReservationId);
         }
+
+        //// LoadBookingReservationDetails version 1. Sửa lại Binding Room.RoomNumber
+        //private void LoadBookingReservationDetails(int bookingReservationId)
+        //{
+
+        //    BookingDetails = bookingDetailService.GetBookingDetails()
+        //        .Where(bd => bd.BookingReservationId == bookingReservationId)
+        //        .ToList();
+
+        //    dgBookingDetails.ItemsSource = null;
+        //    dgBookingDetails.ItemsSource = BookingDetails;
+
+        //}
+
+
+        //LoadBookingReservationDetails Version 2
 
         private void LoadBookingReservationDetails(int bookingReservationId)
         {
@@ -51,6 +68,8 @@ namespace TranHuyHoangWPF.Views.Admin
 
         }
 
+
+        // Search theo kiểu của Load
         private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = txtSearchRoomNumber.Text.Trim();

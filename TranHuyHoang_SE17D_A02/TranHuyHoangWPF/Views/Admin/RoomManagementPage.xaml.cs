@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.Admin
 {
     /// <summary>
     /// Interaction logic for RoomManagementPage.xaml

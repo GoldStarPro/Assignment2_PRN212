@@ -38,7 +38,7 @@
                 <TextBlock Name="txtReservations" FontSize="16" Width="300" VerticalAlignment="Center" TextAlignment="Right" Margin="0, 9">Total Reservations: 0</TextBlock>
             </StackPanel>-->
         </DockPanel>
-        <DataGrid Grid.Row="2" Name="dgReservations" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0">
+        <DataGrid Grid.Row="2" Name="dgReservations" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0" CanUserAddRows="False">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Padding" Value="10, 15" />

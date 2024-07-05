@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.Admin
 {
     /// <summary>
     /// Interaction logic for CustomerManagementPage.xaml
@@ -69,7 +69,7 @@ namespace TranHuyHoangWPF
                 customer.BookingReservations = reservationService.GetBookingReservations().Where(r => r.CustomerId == customer.CustomerId).ToList();
             }
             dgCustomers.ItemsSource = null;
-            dgCustomers.ItemsSource = Customers;      
+            dgCustomers.ItemsSource = Customers;
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)

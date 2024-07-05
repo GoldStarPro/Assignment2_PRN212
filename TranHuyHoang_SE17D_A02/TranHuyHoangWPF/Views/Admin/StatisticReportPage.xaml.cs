@@ -49,6 +49,8 @@ namespace TranHuyHoangWPF.Views.Admin
             LoadReservationList();
         }
 
+        // LoadReservationList version 1. Sửa lại Binding Customer.CustomerFullName
+
         //private void LoadReservationList()
         //{
         //    BookingReservations = bookingReservationService.GetBookingReservations().Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!)).ToList();
@@ -60,6 +62,9 @@ namespace TranHuyHoangWPF.Views.Admin
         //    //txtDays.Text = ((DateTime)dpEndDate.SelectedDate! - (DateTime)dpStartDate.SelectedDate!).TotalDays.ToString();
         //    //txtReservations.Text = BookingReservations.Count.ToString();
         //}
+
+
+        // LoadReservationList version 2
 
         private void LoadReservationList()
         {
@@ -75,13 +80,13 @@ namespace TranHuyHoangWPF.Views.Admin
             foreach (var reservation in reservations)
             {
                 bookingReservations.Add(new
-                    {
-                        BookingReservationId = reservation.BookingReservationId,
-                        BookingDate = reservation.BookingDate,
-                        TotalPrice = reservation.TotalPrice,
-                        CustomerFullName = reservation.Customer.CustomerFullName,
-                        BookingStatus = reservation.BookingStatus,
-                    });
+                {
+                    BookingReservationId = reservation.BookingReservationId,
+                    BookingDate = reservation.BookingDate,
+                    TotalPrice = reservation.TotalPrice,
+                    CustomerFullName = reservation.Customer.CustomerFullName,
+                    BookingStatus = reservation.BookingStatus,
+                });
             }
 
             dgReservations.ItemsSource = null;
