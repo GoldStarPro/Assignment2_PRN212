@@ -91,7 +91,7 @@
                                 <DataTrigger Binding="{Binding CustomerStatus}" Value="2">
                                     <Setter TargetName="statusTextBlock" Property="Text" Value="Deleted" />
                                 </DataTrigger>
-                            </DataTemplate.Triggers>
+                            </DataTemplate.Triggers> 
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

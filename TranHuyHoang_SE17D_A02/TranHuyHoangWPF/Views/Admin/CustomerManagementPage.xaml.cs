@@ -24,7 +24,7 @@ namespace TranHuyHoangWPF
     {
         private readonly ICustomerService customerService = new CustomerService();
         private readonly IBookingReservationService reservationService = new BookingReservationService();
-        public List<Customer> Customers { get; set; }
+        public List<Customer> Customers { get; set; } = new List<Customer>();
 
         public CustomerManagementPage()
         {
@@ -69,7 +69,7 @@ namespace TranHuyHoangWPF
                 customer.BookingReservations = reservationService.GetBookingReservations().Where(r => r.CustomerId == customer.CustomerId).ToList();
             }
             dgCustomers.ItemsSource = null;
-            dgCustomers.ItemsSource = Customers;
+            dgCustomers.ItemsSource = Customers;      
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
