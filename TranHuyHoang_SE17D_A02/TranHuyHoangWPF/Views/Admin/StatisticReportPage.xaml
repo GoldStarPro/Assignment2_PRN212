@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:TranHuyHoangWPF"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1138"
-      Title="StaticReportPage"
+      Title="StatisticReportPage"
       Background="White">
 
     <Grid>
