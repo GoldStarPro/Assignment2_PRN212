@@ -26,6 +26,8 @@ namespace TranHuyHoangWPF.Views.Admin
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
         private readonly IBookingReservationService bookingReservationService = new BookingReservationService();
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
+        public event EventHandler BookingUpdated;
+
         public UpdateBookingDetailsWindow(BookingDetail _bookingDetail)
         {
             InitializeComponent();
@@ -49,8 +51,6 @@ namespace TranHuyHoangWPF.Views.Admin
 
             reservation.TotalPrice = reservation.TotalPrice - previousTotal + decimal.Parse(txtTotalPrice.Text);
             
-            MessageBox.Show(reservation.TotalPrice.ToString());
-
             bookingReservationService.UpdateBookingReservation(reservation);
 
             bookingDetail.RoomId = (int)cboRoomNumber.SelectedValue;
@@ -60,6 +60,9 @@ namespace TranHuyHoangWPF.Views.Admin
 
             MessageBox.Show(reservation.TotalPrice.ToString());
             bookingDetailService.UpdateBookingDetail(bookingDetail);
+
+            // Gọi sự kiện BookingUpdated sau khi cập nhật xong
+            BookingUpdated?.Invoke(this, EventArgs.Empty);
 
             DialogResult = true;
         }

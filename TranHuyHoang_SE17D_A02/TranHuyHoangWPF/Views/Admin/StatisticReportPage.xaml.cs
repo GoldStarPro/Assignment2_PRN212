@@ -107,8 +107,15 @@ namespace TranHuyHoangWPF.Views.Admin
             if (sender is Button button && button.Tag is int bookingReservationId)
             {
                 var bookingReservationDetailsWindow = new BookingReservationDetailsWindow(bookingReservationId);
+                bookingReservationDetailsWindow.BookingUpdated += BookingReservationDetailsWindow_BookingUpdated;
                 bookingReservationDetailsWindow.ShowDialog();
             }
+        }
+
+        private void BookingReservationDetailsWindow_BookingUpdated(object sender, EventArgs e)
+        {
+            // Tải lại danh sách đặt chỗ khi có cập nhật
+            LoadReservationList();
         }
 
     }

@@ -19,6 +19,7 @@ namespace TranHuyHoangWPF.Views.Admin
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
         public List<BookingDetail> BookingDetails { get; set; } = new List<BookingDetail>();
 
+        public event EventHandler BookingUpdated;
         public BookingReservationDetailsWindow(int bookingReservationId)
         {
             InitializeComponent();
@@ -61,15 +62,23 @@ namespace TranHuyHoangWPF.Views.Admin
             if (dgBookingDetails.SelectedItem is BookingDetail selectedBookingDetail)
             {
                 var updateBookingDetailsWindow = new UpdateBookingDetailsWindow(selectedBookingDetail);
+                updateBookingDetailsWindow.BookingUpdated += UpdateBookingDetailsWindow_BookingUpdated;
                 if (updateBookingDetailsWindow.ShowDialog() == true)
                 {
                     LoadBookingReservationDetails(_bookingReservationId);
+                    BookingUpdated?.Invoke(this, EventArgs.Empty); // Truyền sự kiện lên
                 }
             }
             else
             {
                 MessageBox.Show("Please select a customer to update.", "Selection Error");
             }
+        }
+
+        private void UpdateBookingDetailsWindow_BookingUpdated(object sender, EventArgs e)
+        {
+            // Truyền sự kiện lên cho StatisticReportPage
+            BookingUpdated?.Invoke(this, EventArgs.Empty);
         }
 
 
