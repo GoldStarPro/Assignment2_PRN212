@@ -28,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Admin\UpdateBookingDetailsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Admin\UpdateCustomerWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

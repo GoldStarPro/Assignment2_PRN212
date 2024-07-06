@@ -69,7 +69,8 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="Room Number"></Label>
                 <TextBox Name="txtRoomNumber" Text="{Binding RoomNumber}"></TextBox>
-            </StackPanel><StackPanel Orientation="Horizontal">
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <Label Content="Room Type"></Label>
                 <ComboBox Name="txtRoomType"></ComboBox>
             </StackPanel>

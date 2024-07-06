@@ -27,79 +27,110 @@ namespace TranHuyHoangWPF.Views.Admin
             LoadBookingReservationDetails(bookingReservationId);
         }
 
-        //// LoadBookingReservationDetails version 1. Sửa lại Binding Room.RoomNumber
+        // LoadBookingReservationDetails version 1. Sửa lại Binding Room.RoomNumber
+        private void LoadBookingReservationDetails(int bookingReservationId)
+        {
+
+            BookingDetails = bookingDetailService.GetBookingDetails()
+                .Where(bd => bd.BookingReservationId == bookingReservationId)
+                .ToList();
+
+            dgBookingDetails.ItemsSource = null;
+            dgBookingDetails.ItemsSource = BookingDetails;
+
+        }
+
+        // Search theo kiểu Load1
+        private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = txtSearchRoomNumber.Text.Trim();
+
+            dgBookingDetails.ItemsSource = BookingDetails!.Where(bd => bd.Room.RoomNumber.Contains(searchText));
+
+            //var bookingDetails = bookingDetailService.GetBookingDetails()
+            //    .Where(r => r.BookingReservationId == _bookingReservationId && r.Room.RoomNumber.Contains(searchText))
+            //    .ToList();
+
+            //dgBookingDetails.ItemsSource = null;
+            //dgBookingDetails.ItemsSource = bookingDetails;
+
+        }
+
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgBookingDetails.SelectedItem is BookingDetail selectedBookingDetail)
+            {
+                var updateBookingDetailsWindow = new UpdateBookingDetailsWindow(selectedBookingDetail);
+                if (updateBookingDetailsWindow.ShowDialog() == true)
+                {
+                    LoadBookingReservationDetails(_bookingReservationId);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a customer to update.", "Selection Error");
+            }
+        }
+
+
+        ////LoadBookingReservationDetails Version 2
+
         //private void LoadBookingReservationDetails(int bookingReservationId)
         //{
 
-        //    BookingDetails = bookingDetailService.GetBookingDetails()
+        //    var details = bookingDetailService.GetBookingDetails()
         //        .Where(bd => bd.BookingReservationId == bookingReservationId)
         //        .ToList();
+        //    var bookingDetails = new List<dynamic>();
+
+        //    foreach (var detail in details)
+        //    {
+        //        bookingDetails.Add(new
+        //        {
+        //            BookingReservationId = detail.BookingReservationId,
+        //            RoomNumber = detail.Room.RoomNumber,
+        //            StartDate = detail.StartDate,
+        //            EndDate = detail.EndDate,
+        //            ActualPrice = detail.ActualPrice,
+        //        });
+        //    }
 
         //    dgBookingDetails.ItemsSource = null;
-        //    dgBookingDetails.ItemsSource = BookingDetails;
+        //    dgBookingDetails.ItemsSource = bookingDetails;
 
         //}
 
 
-        //LoadBookingReservationDetails Version 2
+        //// Search theo kiểu của Load2
+        //private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    string searchText = txtSearchRoomNumber.Text.Trim();
+        //    var reservations = reservationService.GetBookingReservations()
+        //        .Where(r => r.BookingReservationId == _bookingReservationId)
+        //        .ToList();
 
-        private void LoadBookingReservationDetails(int bookingReservationId)
-        {
+        //    var bookingDetails = new List<dynamic>();
 
-            var details = bookingDetailService.GetBookingDetails()
-                .Where(bd => bd.BookingReservationId == bookingReservationId)
-                .ToList();
-            var bookingDetails = new List<dynamic>();
-
-            foreach (var detail in details)
-            {
-                bookingDetails.Add(new
-                {
-                    BookingReservationId = detail.BookingReservationId,
-                    RoomNumber = detail.Room.RoomNumber,
-                    StartDate = detail.StartDate,
-                    EndDate = detail.EndDate,
-                    ActualPrice = detail.ActualPrice,
-                });
-            }
-
-            dgBookingDetails.ItemsSource = null;
-            dgBookingDetails.ItemsSource = bookingDetails;
-
-        }
-
-
-        // Search theo kiểu của Load
-        private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string searchText = txtSearchRoomNumber.Text.Trim();
-            var reservations = reservationService.GetBookingReservations()
-                .Where(r => r.BookingReservationId == _bookingReservationId)
-                .ToList();
-
-            var bookingDetails = new List<dynamic>();
-
-            foreach (var reservation in reservations)
-            {
-                foreach (var detail in reservation.BookingDetails)
-                {
-                    if (detail.Room.RoomNumber.Contains(searchText))
-                    {
-                        bookingDetails.Add(new
-                        {
-                            BookingReservationId = detail.BookingReservationId,
-                            RoomNumber = detail.Room.RoomNumber,
-                            StartDate = detail.StartDate,
-                            EndDate = detail.EndDate,
-                            ActualPrice = detail.ActualPrice,
-                        });
-                    }
-                }
-            }
-
-            dgBookingDetails.ItemsSource = null;
-            dgBookingDetails.ItemsSource = bookingDetails;
-        }
+        //    foreach (var reservation in reservations)
+        //    {
+        //        foreach (var detail in reservation.BookingDetails)
+        //        {
+        //            if (detail.Room.RoomNumber.Contains(searchText))
+        //            {
+        //                bookingDetails.Add(new
+        //                {
+        //                    BookingReservationId = detail.BookingReservationId,
+        //                    RoomNumber = detail.Room.RoomNumber,
+        //                    StartDate = detail.StartDate,
+        //                    EndDate = detail.EndDate,
+        //                    ActualPrice = detail.ActualPrice,
+        //                });
+        //            }
+        //        }
+        //    }
+        //    dgBookingDetails.ItemsSource = null;
+        //    dgBookingDetails.ItemsSource = bookingDetails;
+        //}
 
     }
 }
