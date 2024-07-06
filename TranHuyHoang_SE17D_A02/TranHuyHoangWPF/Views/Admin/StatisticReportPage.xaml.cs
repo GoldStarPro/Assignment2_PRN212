@@ -82,9 +82,9 @@ namespace TranHuyHoangWPF.Views.Admin
                 bookingReservations.Add(new
                 {
                     BookingReservationId = reservation.BookingReservationId,
+                    CustomerFullName = reservation.Customer.CustomerFullName,
                     BookingDate = reservation.BookingDate,
                     TotalPrice = reservation.TotalPrice,
-                    CustomerFullName = reservation.Customer.CustomerFullName,
                     BookingStatus = reservation.BookingStatus,
                 });
             }

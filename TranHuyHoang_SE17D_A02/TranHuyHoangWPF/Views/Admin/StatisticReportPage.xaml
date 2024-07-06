@@ -49,9 +49,9 @@
             <DataGrid.Columns>
 
                 <DataGridTextColumn Header="Booking Reservation ID" Binding="{Binding BookingReservationId}" Width="3*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerFullName}" Width="3*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate, StringFormat={}{0:dd/MM/yyyy}}" Width="3*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="3*" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerFullName}" Width="3*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding BookingStatus}" Width="1*" IsReadOnly="True"/>
 
                 <!-- Thêm cột nút View Detail -->
