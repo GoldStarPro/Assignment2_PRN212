@@ -50,16 +50,17 @@ namespace TranHuyHoangWPF.Views.Admin
             var previousTotal = (days * bookingDetail.Room.RoomPricePerDay * 1.1m);
 
             reservation.TotalPrice = reservation.TotalPrice - previousTotal + decimal.Parse(txtTotalPrice.Text);
-            
+
             bookingReservationService.UpdateBookingReservation(reservation);
 
             bookingDetail.RoomId = (int)cboRoomNumber.SelectedValue;
+
             bookingDetail.StartDate = DateOnly.FromDateTime(DateTime.Parse(dptbStartDate.Text.Trim()));
             bookingDetail.EndDate = DateOnly.FromDateTime(DateTime.Parse(dptbEndDate.Text.Trim()));
             bookingDetail.ActualPrice = decimal.Parse(txtActualPrice.Text);
 
-            MessageBox.Show(reservation.TotalPrice.ToString());
             bookingDetailService.UpdateBookingDetail(bookingDetail);
+
 
             // Gọi sự kiện BookingUpdated sau khi cập nhật xong
             BookingUpdated?.Invoke(this, EventArgs.Empty);

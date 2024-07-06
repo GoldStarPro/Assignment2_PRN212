@@ -65,7 +65,8 @@
             <TextBlock Text="Update Booking Details" FontSize="30" FontWeight="SemiBold" Margin="0,10" HorizontalAlignment="Center"></TextBlock>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Room Number"></Label>
-                <ComboBox Name="cboRoomNumber" DisplayMemberPath="RoomNumber" SelectionChanged="RecaculateTotalPrice"></ComboBox>
+                <!--<ComboBox Name="cboRoomNumber" DisplayMemberPath="RoomNumber" SelectionChanged="RecaculateTotalPrice"></ComboBox>-->
+                <ComboBox Name="cboRoomNumber" DisplayMemberPath="RoomNumber" SelectedValue="{Binding RoomId, Mode=TwoWay}" SelectedValuePath="RoomId" SelectionChanged="RecaculateTotalPrice"></ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Start Date"></Label>
