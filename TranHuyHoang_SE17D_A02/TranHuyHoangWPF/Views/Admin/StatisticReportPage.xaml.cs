@@ -73,6 +73,8 @@ namespace TranHuyHoangWPF.Views.Admin
 
             var reservations = bookingReservationService.GetBookingReservations()
                 .Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!))
+                .OrderByDescending(br => br.TotalPrice) // Sắp xếp theo TotalPrice giảm dần
+                //.OrderByDescending(br => br.BookingDate) // Sắp xếp theo BookingDate giảm dần
                 .ToList();
 
             var bookingReservations = new List<dynamic>();
@@ -107,16 +109,16 @@ namespace TranHuyHoangWPF.Views.Admin
             if (sender is Button button && button.Tag is int bookingReservationId)
             {
                 var bookingReservationDetailsWindow = new BookingReservationDetailsWindow(bookingReservationId);
-                bookingReservationDetailsWindow.BookingDetailUpdated += BookingReservationDetailsWindow_BookingUpdated;
+                bookingReservationDetailsWindow.BookingUpdated += BookingReservationDetailsWindow_BookingUpdated;
                 bookingReservationDetailsWindow.ShowDialog();
             }
         }
 
-        private void BookingReservationDetailsWindow_BookingUpdated(object sender, EventArgs e)
+        private void BookingReservationDetailsWindow_BookingUpdated(object? sender, EventArgs? e)
         {
             // Tải lại danh sách đặt chỗ khi có cập nhật
             LoadReservationList();
         }
 
-    }
+    }   
 }

@@ -26,7 +26,7 @@ namespace TranHuyHoangWPF.Views.Admin
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
         private readonly IBookingReservationService bookingReservationService = new BookingReservationService();
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
-        public event EventHandler BookingUpdated;
+        public event EventHandler? BookingUpdated;
         public int currentRoomID;
         public UpdateBookingDetailsWindow(BookingDetail _bookingDetail)
         {

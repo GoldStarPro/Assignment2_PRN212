@@ -19,7 +19,7 @@ namespace TranHuyHoangWPF.Views.Admin
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
         public List<BookingDetail> BookingDetails { get; set; } = new List<BookingDetail>();
 
-        public event EventHandler BookingDetailUpdated;
+        public event EventHandler? BookingUpdated;
         public BookingReservationDetailsWindow(int bookingReservationId)
         {
             InitializeComponent();
@@ -66,7 +66,7 @@ namespace TranHuyHoangWPF.Views.Admin
                 if (updateBookingDetailsWindow.ShowDialog() == true)
                 {
                     LoadBookingReservationDetails(_bookingReservationId);
-                    BookingDetailUpdated?.Invoke(this, EventArgs.Empty); // Truyền sự kiện lên
+                    BookingUpdated?.Invoke(this, EventArgs.Empty); // Truyền sự kiện lên
                 }
             }
             else
@@ -75,10 +75,10 @@ namespace TranHuyHoangWPF.Views.Admin
             }
         }
 
-        private void UpdateBookingDetailsWindow_BookingUpdated(object sender, EventArgs e)
+        private void UpdateBookingDetailsWindow_BookingUpdated(object? sender, EventArgs? e)
         {
             // Truyền sự kiện lên cho StatisticReportPage
-            BookingDetailUpdated?.Invoke(this, EventArgs.Empty);
+            BookingUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -107,7 +107,7 @@ namespace TranHuyHoangWPF.Views.Admin
                     }
 
                     // Thông báo cập nhật tới StatisticReportPage
-                    BookingDetailUpdated?.Invoke(this, EventArgs.Empty);
+                    BookingUpdated?.Invoke(this, EventArgs.Empty);
 
                 }
             }
@@ -122,18 +122,16 @@ namespace TranHuyHoangWPF.Views.Admin
 
         private void UpdateTotalPrice(int bookingReservationId, decimal sumToDeduct)
         {
-            using (var context = new FuminiHotelManagementContext())
+            using var context = new FuminiHotelManagementContext();
+            var reservation = context.BookingReservations.FirstOrDefault(br => br.BookingReservationId == bookingReservationId);
+
+            if (reservation != null)
             {
-                var reservation = context.BookingReservations.FirstOrDefault(br => br.BookingReservationId == bookingReservationId);
+                // Cập nhật giá trị của TotalPrice
+                reservation.TotalPrice -= sumToDeduct;
 
-                if (reservation != null)
-                {
-                    // Cập nhật giá trị của TotalPrice
-                    reservation.TotalPrice -= sumToDeduct;
-
-                    // Lưu các thay đổi vào database
-                    context.SaveChanges();
-                }
+                // Lưu các thay đổi vào database
+                context.SaveChanges();
             }
         }
 
