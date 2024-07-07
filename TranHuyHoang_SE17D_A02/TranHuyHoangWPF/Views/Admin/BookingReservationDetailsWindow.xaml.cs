@@ -84,7 +84,7 @@ namespace TranHuyHoangWPF.Views.Admin
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            decimal sum = 0;
+            //decimal sum = 0;
             var selectedBookingDetails = dgBookingDetails.SelectedItems.Cast<BookingDetail>().ToList();
 
             if (selectedBookingDetails.Count > 0)
@@ -94,13 +94,13 @@ namespace TranHuyHoangWPF.Views.Admin
                 {
                     foreach (var bookingDetail in selectedBookingDetails)
                     {
-                        if (bookingDetail.ActualPrice != null)
-                        {
-                            sum += (decimal)bookingDetail.ActualPrice;
-                            sum *= 1.1m;
-                        }
-                        // Cập nhật lại Total Price
-                        UpdateTotalPrice(bookingDetail.BookingReservationId, sum);
+                        //if (bookingDetail.ActualPrice != null)
+                        //{
+                        //    sum += (decimal)bookingDetail.ActualPrice;
+                        //    sum *= 1.1m;
+                        //}
+                        //// Cập nhật lại Total Price
+                        //UpdateTotalPrice(bookingDetail.BookingReservationId, sum);
 
 
                         // Xóa BookingDetail khỏi database
@@ -121,20 +121,22 @@ namespace TranHuyHoangWPF.Views.Admin
             LoadBookingReservationDetails(_bookingReservationId);
         }
 
-        private void UpdateTotalPrice(int bookingReservationId, decimal sumToDeduct)
-        {
-            using var context = new FuminiHotelManagementContext();
-            var reservation = context.BookingReservations.FirstOrDefault(br => br.BookingReservationId == bookingReservationId);
+        //private void UpdateTotalPrice(int bookingReservationId, decimal sumToDeduct)
+        //{
+        //    using var context = new FuminiHotelManagementContext();
+        //    var reservation = context.BookingReservations.FirstOrDefault(br => br.BookingReservationId == bookingReservationId);
 
-            if (reservation != null)
-            {
-                // Cập nhật giá trị của TotalPrice
-                reservation.TotalPrice -= sumToDeduct;
+        //    if (reservation != null)
+        //    {
+        //        // Cập nhật giá trị của TotalPrice
+        //        reservation.TotalPrice -= sumToDeduct;
 
-                // Lưu các thay đổi vào database
-                context.SaveChanges();
-            }
-        }
+        //        // Lưu các thay đổi vào database
+        //        context.SaveChanges();
+        //    }
+        //}
+
+
 
 
         ////LoadBookingReservationDetails Version 2
@@ -163,6 +165,7 @@ namespace TranHuyHoangWPF.Views.Admin
         //    dgBookingDetails.ItemsSource = bookingDetails;
 
         //}
+
 
 
         //// Search theo kiểu của Load2
