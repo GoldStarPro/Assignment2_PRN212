@@ -61,6 +61,15 @@ namespace TranHuyHoangWPF.Views.User
             {
                 int newBookingReservationId = reservationService.GenerateNewBookingReservationId(_customer.CustomerId);
 
+                // Check if the booking detail is already exist
+                var existingBookingDetail = bookingDetailService.GetBookingDetails().Where(bd => bd.BookingReservationId == newBookingReservationId
+                && bd.RoomId == room.RoomId).FirstOrDefault();
+                if (existingBookingDetail != null)
+                {
+                    MessageBox.Show("This room is already booked for the selected reservation.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 var reservation = new BookingReservation
                 {
                     BookingReservationId = newBookingReservationId,
