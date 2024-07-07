@@ -19,7 +19,7 @@ namespace TranHuyHoangWPF.Views.Admin
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
         public List<BookingDetail> BookingDetails { get; set; } = new List<BookingDetail>();
 
-        public event EventHandler BookingUpdated;
+        public event EventHandler BookingDetailUpdated;
         public BookingReservationDetailsWindow(int bookingReservationId)
         {
             InitializeComponent();
@@ -66,7 +66,7 @@ namespace TranHuyHoangWPF.Views.Admin
                 if (updateBookingDetailsWindow.ShowDialog() == true)
                 {
                     LoadBookingReservationDetails(_bookingReservationId);
-                    BookingUpdated?.Invoke(this, EventArgs.Empty); // Truyền sự kiện lên
+                    BookingDetailUpdated?.Invoke(this, EventArgs.Empty); // Truyền sự kiện lên
                 }
             }
             else
@@ -78,7 +78,63 @@ namespace TranHuyHoangWPF.Views.Admin
         private void UpdateBookingDetailsWindow_BookingUpdated(object sender, EventArgs e)
         {
             // Truyền sự kiện lên cho StatisticReportPage
-            BookingUpdated?.Invoke(this, EventArgs.Empty);
+            BookingDetailUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            decimal sum = 0;
+            var selectedBookingDetails = dgBookingDetails.SelectedItems.Cast<BookingDetail>().ToList();
+
+            if (selectedBookingDetails.Count > 0)
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete the selected the booking detail(s)?", "Delete Confirmation", MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    foreach (var bookingDetail in selectedBookingDetails)
+                    {
+                        if (bookingDetail.ActualPrice != null)
+                        {
+                            sum += (decimal)bookingDetail.ActualPrice;
+                            sum *= 1.1m;
+                        }
+                        // Cập nhật lại Total Price
+                        UpdateTotalPrice(bookingDetail.BookingReservationId, sum);
+
+
+                        // Xóa BookingDetail khỏi database
+                        bookingDetailService.DeleteBookingDetail(bookingDetail.BookingReservationId, bookingDetail.RoomId);
+                    }
+
+                    // Thông báo cập nhật tới StatisticReportPage
+                    BookingDetailUpdated?.Invoke(this, EventArgs.Empty);
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select at least one booking detail to delete.", "Selection Error");
+            }
+
+
+            LoadBookingReservationDetails(_bookingReservationId);
+        }
+
+        private void UpdateTotalPrice(int bookingReservationId, decimal sumToDeduct)
+        {
+            using (var context = new FuminiHotelManagementContext())
+            {
+                var reservation = context.BookingReservations.FirstOrDefault(br => br.BookingReservationId == bookingReservationId);
+
+                if (reservation != null)
+                {
+                    // Cập nhật giá trị của TotalPrice
+                    reservation.TotalPrice -= sumToDeduct;
+
+                    // Lưu các thay đổi vào database
+                    context.SaveChanges();
+                }
+            }
         }
 
 

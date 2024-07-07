@@ -29,7 +29,7 @@
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <Button DockPanel.Dock="Right" Name="btnUpdate" Content="Update Booking" Foreground="White" Background="DarkOrange" Width="120" Height="34" FontSize="14" Click="btnUpdate_Click">
+            <Button DockPanel.Dock="Right" Name="btnDelete" Content="Delete Booking" Foreground="White" Background="Red" Width="120" Height="34" FontSize="14" Click="btnDelete_Click">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}">
                         <Style.Resources>
@@ -40,6 +40,18 @@
                     </Style>
                 </Button.Resources>
             </Button>
+            <Button DockPanel.Dock="Right" Name="btnUpdate" Content="Update Booking" Foreground="White" Background="DarkOrange" Width="120" Height="34" FontSize="14" Click="btnUpdate_Click" Margin="0,0,10,0">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20" />
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            
         </DockPanel>
 
         <DataGrid Grid.Row="2" Name="dgBookingDetails" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0" Background="Transparent" CanUserAddRows="False">

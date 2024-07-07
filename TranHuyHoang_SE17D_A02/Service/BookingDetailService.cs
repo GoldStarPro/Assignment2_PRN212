@@ -19,7 +19,7 @@ namespace Service
 
         public void AddBookingDetail(BookingDetail bookingDetail) => bookingDetailRepository.InsertBookingDetail(bookingDetail);
 
-        public void DeleteBookingDetail(int bookingDetailId) => bookingDetailRepository.DeleteBookingDetail(bookingDetailId);
+        public void DeleteBookingDetail(int bookingDetailId, int roomID) => bookingDetailRepository.DeleteBookingDetail(bookingDetailId, roomID);
 
         public BookingDetail? GetBookingDetail(int id) => bookingDetailRepository.GetBookingDetailByID(id);
 

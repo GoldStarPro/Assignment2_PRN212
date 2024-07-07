@@ -62,6 +62,7 @@ namespace TranHuyHoangWPF.Views.User
 
             if (cboRoomNumber.SelectedItem is RoomInformation room
                 && dptbCheckIn.SelectedDate.HasValue && dptbCheckOut.SelectedDate.HasValue
+                && dptbCheckIn.SelectedDate.Value.Date != dptbCheckOut.SelectedDate.Value.Date
                 && dptbCheckIn.SelectedDate.Value.Date >= currentDate
                 && decimal.Parse(txtTotalPrice.Text) > 0)
             {

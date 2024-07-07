@@ -52,10 +52,11 @@ namespace TranHuyHoangWPF.Views.Admin
                         customerService.DeleteCustomer(customer.CustomerId);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Please select at least one customer to delete.", "Selection Error");
-                }
+            }
+
+            else
+            {
+                MessageBox.Show("Please select at least one customer to delete.", "Selection Error");
             }
 
             LoadCustomers();

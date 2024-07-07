@@ -25,32 +25,16 @@ namespace DataAccessLayer
             context.SaveChanges();
         }
 
-        public static void RemoveBookingDetail(int id)
+        public static void RemoveBookingDetail(int id, int roomID)
         {
             using var context = new FuminiHotelManagementContext();
-            var bd = context.BookingDetails.FirstOrDefault(bd => bd.BookingReservationId == id);
+            var bd = context.BookingDetails.FirstOrDefault(bd => bd.BookingReservationId == id
+                                                            && bd.RoomId == roomID);
 
             if (bd != null) context.BookingDetails.Remove(bd);
 
             context.SaveChanges();
         }
-
-        //public static void UpdateBookingDetail(BookingDetail bookingDetail)
-        //{
-        //    using var context = new FuminiHotelManagementContext();
-        //    var bd = context.BookingDetails.FirstOrDefault(bd => bd.BookingReservationId == bookingDetail.BookingReservationId
-        //    && bd.RoomId == bookingDetail.RoomId);
-
-        //    if (bd != null)
-        //    {
-        //        bd.RoomId = bookingDetail.RoomId;
-        //        bd.StartDate = bookingDetail.StartDate;
-        //        bd.EndDate = bookingDetail.EndDate;
-        //        bd.ActualPrice = bookingDetail.ActualPrice;
-        //    }
-
-        //    context.SaveChanges();
-        //}
 
         public static void UpdateBookingDetail(BookingDetail bookingDetail, int currentRoomID)
         {

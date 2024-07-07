@@ -75,11 +75,11 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Actual Price"/>
-                <TextBox x:Name="txtActualPrice"/>
+                <TextBox x:Name="txtActualPrice" IsReadOnly="True"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Total Price"></Label>
-                <TextBox Name="txtTotalPrice"></TextBox>
+                <TextBox Name="txtTotalPrice" IsReadOnly="True"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Name="btnBook" Content="Book" Background="#6346f9" Click="btnBook_Click"></Button>
