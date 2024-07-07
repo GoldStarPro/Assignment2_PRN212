@@ -58,7 +58,7 @@
                 <DataGridTemplateColumn Header="Detail" Width="2*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="View Detail" Click="ViewDetail_Click" Tag="{Binding BookingReservationId}" />
+                            <Button Content="View Detail" Click="ViewDetail_Click" Tag="{Binding BookingReservationId}" HorizontalAlignment="Center" Padding="10, 5"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
