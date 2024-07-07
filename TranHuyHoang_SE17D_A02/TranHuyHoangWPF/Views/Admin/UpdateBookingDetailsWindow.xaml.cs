@@ -27,7 +27,7 @@ namespace TranHuyHoangWPF.Views.Admin
         private readonly IBookingReservationService bookingReservationService = new BookingReservationService();
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
         public event EventHandler BookingUpdated;
-
+        public int currentRoomID;
         public UpdateBookingDetailsWindow(BookingDetail _bookingDetail)
         {
             InitializeComponent();
@@ -38,11 +38,12 @@ namespace TranHuyHoangWPF.Views.Admin
             cboRoomNumber.DisplayMemberPath = "RoomNumber";
             cboRoomNumber.SelectedValuePath = "RoomId";
             cboRoomNumber.SelectedValue = bookingDetail.RoomId;
+            currentRoomID = bookingDetail.RoomId;
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            // Xử lí Total Price
+            // Xử lí Total Price trong BookingReservation
 
             var reservation = bookingDetail.BookingReservation;
 
@@ -53,13 +54,15 @@ namespace TranHuyHoangWPF.Views.Admin
 
             bookingReservationService.UpdateBookingReservation(reservation);
 
+            // Booking Detail
+
             bookingDetail.RoomId = (int)cboRoomNumber.SelectedValue;
 
             bookingDetail.StartDate = DateOnly.FromDateTime(DateTime.Parse(dptbStartDate.Text.Trim()));
             bookingDetail.EndDate = DateOnly.FromDateTime(DateTime.Parse(dptbEndDate.Text.Trim()));
             bookingDetail.ActualPrice = decimal.Parse(txtActualPrice.Text);
 
-            bookingDetailService.UpdateBookingDetail(bookingDetail);
+            bookingDetailService.UpdateBookingDetail(bookingDetail, currentRoomID);
 
 
             // Gọi sự kiện BookingUpdated sau khi cập nhật xong

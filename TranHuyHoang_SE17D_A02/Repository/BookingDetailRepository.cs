@@ -18,6 +18,6 @@ namespace Repository
 
         public void InsertBookingDetail(BookingDetail bookingDetail) => BookingDetailDAO.AddBookingDetail(bookingDetail);
 
-        public void UpdateBookingDetail(BookingDetail bookingDetail) => BookingDetailDAO.UpdateBookingDetail(bookingDetail);
+        public void UpdateBookingDetail(BookingDetail bookingDetail, int currentRoomID) => BookingDetailDAO.UpdateBookingDetail(bookingDetail, currentRoomID);
     }
 }

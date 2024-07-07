@@ -10,7 +10,7 @@ namespace Service
     public interface IBookingDetailService
     {
         void AddBookingDetail(BookingDetail bookingDetail);
-        void UpdateBookingDetail(BookingDetail bookingDetail);
+        void UpdateBookingDetail(BookingDetail bookingDetail, int currentRoomID);
         void DeleteBookingDetail(int bookingDetailId);
         List<BookingDetail> GetBookingDetails();
         BookingDetail? GetBookingDetail(int id);

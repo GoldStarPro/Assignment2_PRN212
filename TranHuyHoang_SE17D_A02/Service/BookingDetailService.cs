@@ -25,6 +25,6 @@ namespace Service
 
         public List<BookingDetail> GetBookingDetails() => bookingDetailRepository.GetBookingDetails();
 
-        public void UpdateBookingDetail(BookingDetail bookingDetail) => bookingDetailRepository.UpdateBookingDetail(bookingDetail);
+        public void UpdateBookingDetail(BookingDetail bookingDetail, int currentRoomID) => bookingDetailRepository.UpdateBookingDetail(bookingDetail, currentRoomID);
     }
 }

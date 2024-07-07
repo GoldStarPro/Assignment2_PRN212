@@ -52,12 +52,9 @@ namespace DataAccessLayer
         //    context.SaveChanges();
         //}
 
-        public static void UpdateBookingDetail(BookingDetail bookingDetail)
+        public static void UpdateBookingDetail(BookingDetail bookingDetail, int currentRoomID)
         {
             using var context = new FuminiHotelManagementContext();
-
-            // Lấy ra roomID hiện tại của booking entry được chọn
-            var currentRoomID = bookingDetail.RoomId;
 
             // Tìm BookingDetail dựa trên BookingReservationId và RoomId
             var bd = context.BookingDetails.FirstOrDefault(bd =>
@@ -76,6 +73,20 @@ namespace DataAccessLayer
                     context.BookingDetails.Remove(bookingDetailToRemove);
                     context.SaveChanges();
                 }
+
+                // Tạo mới BookingDetail với thông tin đã cập nhật
+                var updatedBookingDetail = new BookingDetail
+                {
+                    BookingReservationId = bookingDetail.BookingReservationId,
+                    RoomId = bookingDetail.RoomId,
+                    StartDate = bookingDetail.StartDate,
+                    EndDate = bookingDetail.EndDate,
+                    ActualPrice = bookingDetail.ActualPrice
+                };
+
+                // Thêm BookingDetail mới vào context và lưu thay đổi
+                context.BookingDetails.Add(updatedBookingDetail);
+                context.SaveChanges();
             }
 
             if (bd != null)

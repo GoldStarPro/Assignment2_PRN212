@@ -8,6 +8,6 @@ namespace Repository
         BookingDetail? GetBookingDetailByID(int bookingDetailId);
         void InsertBookingDetail(BookingDetail bookingDetail);
         void DeleteBookingDetail(int bookingDetailID);
-        void UpdateBookingDetail(BookingDetail bookingDetail);
+        void UpdateBookingDetail(BookingDetail bookingDetail, int currentRoomID);
     }
 }
