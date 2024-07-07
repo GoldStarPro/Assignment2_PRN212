@@ -1,9 +1,10 @@
 ﻿using System;
+using BusinessObject;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace BusinessObject;
+namespace DataAccessLayer;
 
 public partial class FuminiHotelManagementContext : DbContext
 {
