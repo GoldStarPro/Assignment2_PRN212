@@ -38,16 +38,17 @@ namespace TranHuyHoangWPF.Views.Admin
             cboRoomNumber.DisplayMemberPath = "RoomNumber";
             cboRoomNumber.SelectedValuePath = "RoomId";
             cboRoomNumber.SelectedValue = bookingDetail.RoomId;
-            currentRoomID = bookingDetail.RoomId;
+            currentRoomID = _bookingDetail.RoomId;
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            // Check if updated-booking detail is already exist
+            // Check if the exist of other booking detail entry with the same BookingReservationID and RoomID
             var existingBookingDetail = bookingDetailService.GetBookingDetails().Where(bd => bd.BookingReservationId == bookingDetail.BookingReservationId
                 && bd.RoomId == (int)cboRoomNumber.SelectedValue).FirstOrDefault();
-            if (existingBookingDetail != null)
+            if (existingBookingDetail != null && currentRoomID != (int)cboRoomNumber.SelectedValue)
             {
+                bookingDetail.RoomId = currentRoomID;
                 MessageBox.Show("This room is already booked for the selected reservation.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
