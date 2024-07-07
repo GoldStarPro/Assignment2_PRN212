@@ -43,6 +43,16 @@ namespace TranHuyHoangWPF.Views.Admin
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
+            // Check if updated-booking detail is already exist
+            var existingBookingDetail = bookingDetailService.GetBookingDetails().Where(bd => bd.BookingReservationId == bookingDetail.BookingReservationId
+                && bd.RoomId == (int)cboRoomNumber.SelectedValue).FirstOrDefault();
+            if (existingBookingDetail != null)
+            {
+                MessageBox.Show("This room is already booked for the selected reservation.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
             // Xử lí Total Price trong BookingReservation
 
             var reservation = bookingDetail.BookingReservation;
