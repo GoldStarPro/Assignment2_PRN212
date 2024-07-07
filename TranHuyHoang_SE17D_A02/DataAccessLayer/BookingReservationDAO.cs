@@ -60,7 +60,7 @@ namespace DataAccessLayer
         public static int GenerateNewBookingReservationId(int customerId)
         {
             using var context = new FuminiHotelManagementContext();
-            // Lấy ngày hôm nay
+
             DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
             // Tìm BookingReservation của khách hàng trong ngày hôm nay

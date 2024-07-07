@@ -50,55 +50,6 @@ namespace TranHuyHoangWPF.Views.Admin
             LoadReservationList();
         }
 
-        // LoadReservationList version 1. Sửa lại Binding Customer.CustomerFullName
-
-        //private void LoadReservationList()
-        //{
-        //    BookingReservations = bookingReservationService.GetBookingReservations().Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!)).ToList();
-
-        //    dgReservations.ItemsSource = null;
-        //    dgReservations.ItemsSource = BookingReservations;
-
-        //    //txtRevenue.Text = BookingReservations.Sum(br => br.TotalPrice).ToString();
-        //    //txtDays.Text = ((DateTime)dpEndDate.SelectedDate! - (DateTime)dpStartDate.SelectedDate!).TotalDays.ToString();
-        //    //txtReservations.Text = BookingReservations.Count.ToString();
-        //}
-
-
-        // LoadReservationList version 2
-
-        //private void LoadReservationList()
-        //{
-        //    if (dpStartDate.SelectedDate == null || dpEndDate.SelectedDate == null)
-        //        return;
-
-        //    var reservations = bookingReservationService.GetBookingReservations()
-        //        .Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!))
-        //        .OrderByDescending(br => br.TotalPrice) // Sắp xếp theo TotalPrice giảm dần
-        //        //.OrderByDescending(br => br.BookingDate) // Sắp xếp theo BookingDate giảm dần
-        //        .ToList();
-
-        //    var bookingReservations = new List<dynamic>();
-
-        //    foreach (var reservation in reservations)
-        //    {
-        //        bookingReservations.Add(new
-        //        {
-        //            BookingReservationId = reservation.BookingReservationId,
-        //            CustomerFullName = reservation.Customer.CustomerFullName,
-        //            BookingDate = reservation.BookingDate,
-        //            TotalPrice = reservation.TotalPrice,
-        //            BookingStatus = reservation.BookingStatus,
-        //        });
-        //    }
-
-        //    dgReservations.ItemsSource = null;
-        //    dgReservations.ItemsSource = bookingReservations;
-
-        //}
-
-
-        // LoadReservationList version 3
         private void LoadReservationList()
         {
             if (dpStartDate.SelectedDate == null || dpEndDate.SelectedDate == null)
@@ -116,13 +67,11 @@ namespace TranHuyHoangWPF.Views.Admin
                 // Lấy danh sách các BookingDetail liên quan đến BookingReservation hiện tại
                 var relatedBookingDetails = bookingDetails.Where(bd => bd.BookingReservationId == reservation.BookingReservationId).ToList();
 
-                // Tính tổng ActualPrice
                 decimal totalActualPrice = relatedBookingDetails.Sum(bd => bd.ActualPrice ?? 0m);
 
-                // Tính toán và cập nhật TotalPrice
                 reservation.TotalPrice = totalActualPrice * 1.1m;
 
-                // Lưu thay đổi vào database (có thể lưu riêng lẻ hoặc sau cùng, tùy thuộc vào yêu cầu của bạn)
+                // Lưu thay đổi vào database
                 bookingReservationService.UpdateBookingReservation(reservation);
             }
 
@@ -138,7 +87,6 @@ namespace TranHuyHoangWPF.Views.Admin
             dgReservations.ItemsSource = null;
             dgReservations.ItemsSource = bookingReservations;
         }
-
 
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)

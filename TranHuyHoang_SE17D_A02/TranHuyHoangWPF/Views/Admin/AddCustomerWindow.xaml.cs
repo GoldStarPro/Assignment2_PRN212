@@ -30,17 +30,10 @@ namespace TranHuyHoangWPF.Views.Admin
             InitializeComponent();
             customer = new Customer();
             DataContext = customer;
-            //dptbBirthday.SelectedDate = DateTime.Today;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //if (string.IsNullOrWhiteSpace(txtFullName.Text))
-            //{
-            //    MessageBox.Show("Please enter the full name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    return;
-            //}
-
             if (string.IsNullOrWhiteSpace(txtFullName.Text) ||
                 string.IsNullOrWhiteSpace(txtEmail.Text) ||
                 string.IsNullOrWhiteSpace(txtPhone.Text) ||
@@ -66,7 +59,7 @@ namespace TranHuyHoangWPF.Views.Admin
                 return;
             }
 
-            // Nếu tất cả các trường hợp lệ, tiến hành thêm Customer
+            // Add Customer
             customer.CustomerFullName = txtFullName.Text.Trim();
             customer.Telephone = txtPhone.Text.Trim();
             customer.CustomerBirthday = DateOnly.FromDateTime(dptbBirthday.SelectedDate.Value);
@@ -78,7 +71,6 @@ namespace TranHuyHoangWPF.Views.Admin
             DialogResult = true;
             Close();
         }
-
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {

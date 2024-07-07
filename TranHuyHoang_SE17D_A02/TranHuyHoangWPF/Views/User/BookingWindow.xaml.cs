@@ -26,7 +26,6 @@ namespace TranHuyHoangWPF.Views.User
         private readonly IBookingReservationService reservationService = new BookingReservationService();
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
 
-
         public BookingWindow(Customer customer)
         {
             InitializeComponent();
@@ -132,9 +131,6 @@ namespace TranHuyHoangWPF.Views.User
                 MessageBox.Show("Missing fields or Invalid Date.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
-
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {

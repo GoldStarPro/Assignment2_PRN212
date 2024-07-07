@@ -40,7 +40,6 @@ namespace TranHuyHoangWPF.Views.Admin
             txtRoomType.SelectedValuePath = "RoomTypeId";
         }
 
-
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
 

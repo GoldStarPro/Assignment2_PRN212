@@ -95,9 +95,6 @@ namespace DataAccessLayer
             }
         }
 
-
-
-
         public static BookingDetail? GetBookingDetail(int id)
         {
             using var context = new FuminiHotelManagementContext();

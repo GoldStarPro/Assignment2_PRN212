@@ -27,7 +27,7 @@ namespace TranHuyHoangWPF.Views.User
         private readonly IBookingReservationService reservationService = new BookingReservationService();
         private readonly ICustomerService customerService = new CustomerService();
 
-        public List<BookingReservation> Reservations { get; set; } = new List<BookingReservation>();
+        public List<BookingReservation> Reservations { get; set; } = [];
 
         public ReservationHistoryWindow(Customer customer)
         {
@@ -88,7 +88,6 @@ namespace TranHuyHoangWPF.Views.User
 
             dgReservations.ItemsSource = bookingReservations;
         }
-
 
         private void ViewHistoryDetail_Click(object sender, RoutedEventArgs e)
         {

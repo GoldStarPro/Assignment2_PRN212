@@ -55,7 +55,6 @@ namespace TranHuyHoangWPF.Views.User
 
             dgReservationHistoryDetails.ItemsSource = null;
             dgReservationHistoryDetails.ItemsSource = reservationHistoryDetails;
-
         }
 
         private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
