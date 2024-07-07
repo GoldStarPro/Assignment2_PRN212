@@ -57,7 +57,13 @@ namespace TranHuyHoangWPF.Views.User
 
         private void btnBook_Click(object sender, RoutedEventArgs e)
         {
-            if (cboRoomNumber.SelectedItem is RoomInformation room && dptbCheckIn.SelectedDate.HasValue && dptbCheckOut.SelectedDate.HasValue && decimal.Parse(txtTotalPrice.Text) > 0)
+            // Ngày CheckIn phải ít nhất là sau ngày Book
+            DateTime currentDate = DateTime.Now.Date;
+
+            if (cboRoomNumber.SelectedItem is RoomInformation room
+                && dptbCheckIn.SelectedDate.HasValue && dptbCheckOut.SelectedDate.HasValue
+                && dptbCheckIn.SelectedDate.Value.Date >= currentDate
+                && decimal.Parse(txtTotalPrice.Text) > 0)
             {
                 int newBookingReservationId = reservationService.GenerateNewBookingReservationId(_customer.CustomerId);
 
@@ -122,7 +128,7 @@ namespace TranHuyHoangWPF.Views.User
 
             else
             {
-                MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Missing fields or Invalid Date.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
