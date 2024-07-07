@@ -56,8 +56,8 @@ namespace TranHuyHoangWPF.Views.Admin
                 {
                     foreach (var room in selectedRooms)
                     {
-                        if (bookingDetails.FirstOrDefault(b => b.RoomId == room.RoomId && b.StartDate <= DateOnly.FromDateTime(DateTime.Now) &&
-                                                                b.EndDate >= DateOnly.FromDateTime(DateTime.Now)) != null)
+                        if (bookingDetails.FirstOrDefault(b => b.RoomId == room.RoomId
+                                                                && b.EndDate >= DateOnly.FromDateTime(DateTime.Now)) != null)
                         {
                             // Update roomStatus to 2 (deleted)
                             roomInformationService.UpdateRoomStatus(room.RoomId, 2);
@@ -65,8 +65,11 @@ namespace TranHuyHoangWPF.Views.Admin
                         else
                         {
                             roomInformationService.DeleteRoomInformation(room.RoomId);
+
                         }
+
                     }
+
                 }
             }
             else
@@ -76,6 +79,7 @@ namespace TranHuyHoangWPF.Views.Admin
 
             LoadRooms();
         }
+
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
