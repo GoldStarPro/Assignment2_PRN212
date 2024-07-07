@@ -25,6 +25,7 @@ namespace TranHuyHoangWPF.Views.Admin
         public List<BookingReservation> BookingReservations { get; set; } = new List<BookingReservation>();
 
         private readonly IBookingReservationService bookingReservationService = new BookingReservationService();
+        private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
 
         public StatisticReportPage()
         {
@@ -66,6 +67,38 @@ namespace TranHuyHoangWPF.Views.Admin
 
         // LoadReservationList version 2
 
+        //private void LoadReservationList()
+        //{
+        //    if (dpStartDate.SelectedDate == null || dpEndDate.SelectedDate == null)
+        //        return;
+
+        //    var reservations = bookingReservationService.GetBookingReservations()
+        //        .Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!))
+        //        .OrderByDescending(br => br.TotalPrice) // Sắp xếp theo TotalPrice giảm dần
+        //        //.OrderByDescending(br => br.BookingDate) // Sắp xếp theo BookingDate giảm dần
+        //        .ToList();
+
+        //    var bookingReservations = new List<dynamic>();
+
+        //    foreach (var reservation in reservations)
+        //    {
+        //        bookingReservations.Add(new
+        //        {
+        //            BookingReservationId = reservation.BookingReservationId,
+        //            CustomerFullName = reservation.Customer.CustomerFullName,
+        //            BookingDate = reservation.BookingDate,
+        //            TotalPrice = reservation.TotalPrice,
+        //            BookingStatus = reservation.BookingStatus,
+        //        });
+        //    }
+
+        //    dgReservations.ItemsSource = null;
+        //    dgReservations.ItemsSource = bookingReservations;
+
+        //}
+
+
+        // LoadReservationList version 3
         private void LoadReservationList()
         {
             if (dpStartDate.SelectedDate == null || dpEndDate.SelectedDate == null)
@@ -74,27 +107,38 @@ namespace TranHuyHoangWPF.Views.Admin
             var reservations = bookingReservationService.GetBookingReservations()
                 .Where(br => br.BookingDate >= DateOnly.FromDateTime((DateTime)dpStartDate.SelectedDate!) && br.BookingDate <= DateOnly.FromDateTime((DateTime)dpEndDate.SelectedDate!))
                 .OrderByDescending(br => br.TotalPrice) // Sắp xếp theo TotalPrice giảm dần
-                //.OrderByDescending(br => br.BookingDate) // Sắp xếp theo BookingDate giảm dần
                 .ToList();
 
-            var bookingReservations = new List<dynamic>();
+            var bookingDetails = bookingDetailService.GetBookingDetails();
 
             foreach (var reservation in reservations)
             {
-                bookingReservations.Add(new
-                {
-                    BookingReservationId = reservation.BookingReservationId,
-                    CustomerFullName = reservation.Customer.CustomerFullName,
-                    BookingDate = reservation.BookingDate,
-                    TotalPrice = reservation.TotalPrice,
-                    BookingStatus = reservation.BookingStatus,
-                });
+                // Lấy danh sách các BookingDetail liên quan đến BookingReservation hiện tại
+                var relatedBookingDetails = bookingDetails.Where(bd => bd.BookingReservationId == reservation.BookingReservationId).ToList();
+
+                // Tính tổng ActualPrice
+                decimal totalActualPrice = relatedBookingDetails.Sum(bd => bd.ActualPrice ?? 0m);
+
+                // Tính toán và cập nhật TotalPrice
+                reservation.TotalPrice = totalActualPrice * 1.1m;
+
+                // Lưu thay đổi vào database (có thể lưu riêng lẻ hoặc sau cùng, tùy thuộc vào yêu cầu của bạn)
+                bookingReservationService.UpdateBookingReservation(reservation);
             }
+
+            var bookingReservations = reservations.Select(reservation => new
+            {
+                BookingReservationId = reservation.BookingReservationId,
+                CustomerFullName = reservation.Customer.CustomerFullName,
+                BookingDate = reservation.BookingDate,
+                TotalPrice = reservation.TotalPrice,
+                BookingStatus = reservation.BookingStatus,
+            }).ToList();
 
             dgReservations.ItemsSource = null;
             dgReservations.ItemsSource = bookingReservations;
-
         }
+
 
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
