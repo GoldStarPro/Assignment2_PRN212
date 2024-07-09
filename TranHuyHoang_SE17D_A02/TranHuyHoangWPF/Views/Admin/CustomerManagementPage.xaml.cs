@@ -34,7 +34,7 @@ namespace TranHuyHoangWPF.Views.Admin
 
         private void txtSearchCustomer_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchText = txtSearchCustomer.Text;
+            string searchText = txtSearchCustomer.Text.ToLower();
             dgCustomers.ItemsSource = Customers.Where(c => c.CustomerFullName!.ToLower().Contains(searchText)).ToList();
         }
 
