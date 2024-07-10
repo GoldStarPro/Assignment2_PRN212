@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1138"
       Title="CustomerManagement"
-      Background="White">
+      Background="LightBlue">
 
     <Grid>
         <Grid.RowDefinitions>
