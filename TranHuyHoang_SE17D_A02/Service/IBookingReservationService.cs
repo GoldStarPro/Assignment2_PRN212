@@ -10,9 +10,10 @@ namespace Service
     public interface IBookingReservationService
     {
         List<BookingReservation> GetBookingReservations();
-        BookingReservation? GetBookingReservation(int id);
+        BookingReservation? GetBookingReservationById(int id);
         void AddBookingReservation(BookingReservation reservation);
         void UpdateBookingReservation(BookingReservation reservation);
         void DeleteBookingReservation(int id);
+        int GenerateNewBookingReservationId(int customerID);
     }
 }

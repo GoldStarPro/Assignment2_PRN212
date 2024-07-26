@@ -10,7 +10,7 @@ namespace Repository
 {
     public class BookingDetailRepository : IBookingDetailRepository
     {
-        public void DeleteBookingDetail(int bookingDetailID) => BookingDetailDAO.RemoveBookingDetail(bookingDetailID);
+        public void DeleteBookingDetail(int bookingDetailID, int roomID) => BookingDetailDAO.RemoveBookingDetail(bookingDetailID, roomID);
 
         public BookingDetail? GetBookingDetailByID(int bookingDetailId) => BookingDetailDAO.GetBookingDetail(bookingDetailId);
 
@@ -18,6 +18,6 @@ namespace Repository
 
         public void InsertBookingDetail(BookingDetail bookingDetail) => BookingDetailDAO.AddBookingDetail(bookingDetail);
 
-        public void UpdateBookingDetail(BookingDetail bookingDetail) => BookingDetailDAO.UpdateBookingDetail(bookingDetail);
+        public void UpdateBookingDetail(BookingDetail bookingDetail, int currentRoomID) => BookingDetailDAO.UpdateBookingDetail(bookingDetail, currentRoomID);
     }
 }

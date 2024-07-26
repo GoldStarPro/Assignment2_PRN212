@@ -14,8 +14,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TranHuyHoangWPF.Views.Admin;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.User
 {
     /// <summary>
     /// Interaction logic for ReservationHistoryWindow.xaml
@@ -25,9 +26,8 @@ namespace TranHuyHoangWPF
         private Customer _customer;
         private readonly IBookingReservationService reservationService = new BookingReservationService();
         private readonly ICustomerService customerService = new CustomerService();
-        private readonly IRoomInformationService roomInformationService = new RoomInformationService();
 
-        public List<BookingReservation> Reservations { get; set; }
+        public List<BookingReservation> Reservations { get; set; } = [];
 
         public ReservationHistoryWindow(Customer customer)
         {
@@ -56,12 +56,6 @@ namespace TranHuyHoangWPF
             Close();
         }
 
-        private void txtSearchRoomNumber_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string searchText = txtSearchRoomNumber.Text.Trim();
-            dgReservations.ItemsSource = Reservations.Where(r => r.CustomerId == _customer.CustomerId && r.BookingDetails.ElementAt(0).Room.RoomNumber.Contains(searchText)).ToList();
-        }
-
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             var bookingWindow = new BookingWindow(_customer);
@@ -74,10 +68,34 @@ namespace TranHuyHoangWPF
 
         private void LoadReservations()
         {
-            Reservations = reservationService.GetBookingReservations().Where(r => r.CustomerId == _customer.CustomerId).ToList();
+            var reservations = reservationService.GetBookingReservations()
+                .Where(r => r.CustomerId == _customer.CustomerId)
+                .ToList();
 
-            dgReservations.ItemsSource = null;
-            dgReservations.ItemsSource = Reservations;
+            var bookingReservations = new List<dynamic>();
+
+            foreach (var reservation in reservations)
+            {
+                bookingReservations.Add(new
+                {
+                    BookingReservationId = reservation.BookingReservationId,
+                    CustomerFullName = reservation.Customer.CustomerFullName,
+                    BookingDate = reservation.BookingDate,
+                    TotalPrice = reservation.TotalPrice,
+                    BookingStatus = reservation.BookingStatus
+                });
+            }
+
+            dgReservations.ItemsSource = bookingReservations;
+        }
+
+        private void ViewHistoryDetail_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int bookingReservationId)
+            {
+                var reservationHistoryDetailsWindow = new ReservationHistoryDetailsWindow(bookingReservationId);
+                reservationHistoryDetailsWindow.ShowDialog();
+            }
         }
 
     }

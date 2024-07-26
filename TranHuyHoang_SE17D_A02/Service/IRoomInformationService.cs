@@ -13,6 +13,7 @@ namespace Service
         RoomInformation? GetRoomInformationById(int id);
         void AddRoomInformation(RoomInformation roomInformation);    
         void UpdateRoomInformation(RoomInformation roomInformation);
+        void UpdateRoomStatus(int roomID, byte newStatus);
         void DeleteRoomInformation(int id);
 
     }

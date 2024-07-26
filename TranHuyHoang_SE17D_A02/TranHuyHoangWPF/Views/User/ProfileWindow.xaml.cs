@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.User
 {
     /// <summary>
     /// Interaction logic for ProfileWindow.xaml
@@ -39,38 +39,26 @@ namespace TranHuyHoangWPF
             InitializeComponent();
             customer = _customer;
             DataContext = customer;
-            lblPassword.Content = "Old Password";
-            lblConfirmPassword.Content = "New Password";
             txtEmail.IsEnabled = false;
+
+            // Gán giá trị cho DatePicker nếu CustomerBirthday có giá trị
+            if (customer.CustomerBirthday != default)
+            {
+                dptbBirthday.SelectedDate = new DateTime(customer.CustomerBirthday!.Value.Year, customer.CustomerBirthday.Value.Month, customer.CustomerBirthday.Value.Day);
+            }
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (btnUpdate.Content.ToString()!.Equals("Add"))
+            if (string.IsNullOrWhiteSpace(txtOldPassword.Password))
             {
-                if (txtOldPassword.Password != txtNewPassword.Password)
-                {
-                    MessageBox.Show("Passwords do not match", "Profile");
-                }
-                else
-                {
-                    customer.CustomerFullName = txtFullName.Text.Trim();
-                    customer.Telephone = txtPhone.Text.Trim();
-                    customer.CustomerBirthday = DateOnly.FromDateTime(DateTime.Parse(dptbBirthday.Text.Trim()));
-                    customer.EmailAddress = txtEmail.Text.Trim();
-                    customer.Password = txtOldPassword.Password;
-                    customer.CustomerStatus = 1;
-                    customerService.AddCustomer(customer);
-                }
-
-                DialogResult = true;
-
-                Close();
-
+                MessageBox.Show("Password is required to update profile", "Profile", MessageBoxButton.OK, MessageBoxImage.Exclamation); 
+                return;
             }
-            else if (!string.IsNullOrEmpty(txtOldPassword.Password) && !string.IsNullOrEmpty(txtOldPassword.Password) && !txtOldPassword.Password.Equals(customer.Password))
+
+            if (!string.IsNullOrEmpty(txtOldPassword.Password) && !txtOldPassword.Password.Equals(customer.Password))
             {
-                MessageBox.Show("Password is incorrect", "Profile");
+                MessageBox.Show("Password is incorrect", "Profile", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {

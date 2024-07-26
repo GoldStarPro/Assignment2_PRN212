@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.Admin
 {
     /// <summary>
     /// Interaction logic for RoomManagementPage.xaml
@@ -24,7 +24,7 @@ namespace TranHuyHoangWPF
     {
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
-        public List<RoomInformation> RoomInformations { get; set; }
+        public List<RoomInformation> RoomInformations { get; set; } = new List<RoomInformation>();
 
         public RoomManagementPage()
         {
@@ -56,16 +56,20 @@ namespace TranHuyHoangWPF
                 {
                     foreach (var room in selectedRooms)
                     {
-                        if (bookingDetails.FirstOrDefault(b => b.RoomId == room.RoomId && b.StartDate <= DateOnly.FromDateTime(DateTime.Now) &&
-                                                                b.EndDate >= DateOnly.FromDateTime(DateTime.Now)) != null)
+                        if (bookingDetails.FirstOrDefault(b => b.RoomId == room.RoomId
+                                                                && b.EndDate >= DateOnly.FromDateTime(DateTime.Now)) != null)
                         {
-                            MessageBox.Show($"Room {room.RoomNumber} can't be deleted");
+                            // Update roomStatus to 2 (deleted)
+                            roomInformationService.UpdateRoomStatus(room.RoomId, 2);
                         }
                         else
                         {
                             roomInformationService.DeleteRoomInformation(room.RoomId);
+
                         }
+
                     }
+
                 }
             }
             else
@@ -75,6 +79,7 @@ namespace TranHuyHoangWPF
 
             LoadRooms();
         }
+
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
@@ -87,8 +92,8 @@ namespace TranHuyHoangWPF
         {
             if (dgRooms.SelectedItem is RoomInformation selectedRoom)
             {
-                var roomInformationWindow = new RoomInformationWindow(selectedRoom);
-                if (roomInformationWindow.ShowDialog() == true)
+                var updateRoomWindow = new UpdateRoomInformationWindow(selectedRoom);
+                if (updateRoomWindow.ShowDialog() == true)
                 {
                     LoadRooms();
                 }
@@ -101,8 +106,8 @@ namespace TranHuyHoangWPF
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var roomInformationWindow = new RoomInformationWindow();
-            if (roomInformationWindow.ShowDialog() == true)
+            var addRoomWindow = new AddRoomInformationWindow();
+            if (addRoomWindow.ShowDialog() == true)
             {
                 LoadRooms();
             }

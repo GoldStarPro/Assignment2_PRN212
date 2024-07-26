@@ -7,7 +7,7 @@ namespace Repository
         List<BookingDetail> GetBookingDetails();
         BookingDetail? GetBookingDetailByID(int bookingDetailId);
         void InsertBookingDetail(BookingDetail bookingDetail);
-        void DeleteBookingDetail(int bookingDetailID);
-        void UpdateBookingDetail(BookingDetail bookingDetail);
+        void DeleteBookingDetail(int bookingDetailID, int roomID);
+        void UpdateBookingDetail(BookingDetail bookingDetail, int currentRoomID);
     }
 }

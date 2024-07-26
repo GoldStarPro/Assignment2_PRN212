@@ -1,0 +1,74 @@
+﻿<Window x:Class="TranHuyHoangWPF.Views.Admin.BookingReservationDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TranHuyHoangWPF.Views.Admin"
+        mc:Ignorable="d"
+        Title="Booking Reservation Details Window" Height="500" Width="900"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10*" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" LastChildFill="False" Margin="20, 0">
+            <TextBlock DockPanel.Dock="Left" Text="Booking Details" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
+        </DockPanel>
+        <DockPanel Grid.Row="1" LastChildFill="False" Margin="20, 0">
+            <TextBox Name="txtSearchRoomNumber" DockPanel.Dock="Left" Height="35" Width="250" TextWrapping="WrapWithOverflow" VerticalContentAlignment="Center" Padding="10, 0" FontSize="14" FontStyle="Italic" 
+                     TextChanged="txtSearchRoomNumber_TextChanged">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Style.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20" />
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <Button DockPanel.Dock="Right" Name="btnDelete" Content="Delete Booking" Foreground="White" Background="Red" Width="120" Height="34" FontSize="14" Click="btnDelete_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20" />
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button DockPanel.Dock="Right" Name="btnUpdate" Content="Update Booking" Foreground="White" Background="DarkOrange" Width="120" Height="34" FontSize="14" Click="btnUpdate_Click" Margin="0,0,10,0">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20" />
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            
+        </DockPanel>
+
+        <DataGrid Grid.Row="2" Name="dgBookingDetails" AutoGenerateColumns="False" Width="Auto" HorizontalAlignment="Stretch" BorderThickness="0" Background="Transparent" CanUserAddRows="False">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Padding" Value="10, 15" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Booking Reservation ID" Binding="{Binding BookingReservationId}" Width="3*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Room Number" Binding="{Binding Room.RoomNumber}" Width="3*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate, StringFormat={}{0:dd/MM/yyyy}}" Width="3*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, StringFormat={}{0:dd/MM/yyyy}}" Width="3*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Actual Price" Binding="{Binding ActualPrice}" Width="3*" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

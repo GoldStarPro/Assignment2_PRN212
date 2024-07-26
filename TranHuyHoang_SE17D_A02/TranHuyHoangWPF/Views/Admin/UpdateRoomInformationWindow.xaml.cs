@@ -14,43 +14,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.Admin
 {
     /// <summary>
-    /// Interaction logic for RoomInformationWindow.xaml
+    /// Interaction logic for UpdateRoomInformationWindow.xaml
     /// </summary>
-    public partial class RoomInformationWindow : Window
+    public partial class UpdateRoomInformationWindow : Window
     {
         private RoomInformation roomInformation;
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
         private readonly IRoomTypeService roomTypeService = new RoomTypeService();
 
-
-        public RoomInformationWindow()
-        {
-            InitializeComponent();
-            roomInformation = new RoomInformation
-            {
-                RoomStatus = 1
-            };
-            txtStatus.Text = "1";
-            btnUpdate.Content = "Add";
-            DataContext = roomInformation;
-
-            txtRoomType.ItemsSource = roomTypeService.GetRoomTypes();
-            txtRoomType.DisplayMemberPath = "RoomTypeName";
-            txtRoomType.SelectedValuePath = "RoomTypeId";
-        }
-
-        public RoomInformationWindow(RoomInformation _roomInformation)
+        public UpdateRoomInformationWindow(RoomInformation _roomInformation)
         {
             InitializeComponent();
             roomInformation = _roomInformation;
             DataContext = roomInformation;
 
+            this.Title = "Update Room Information Window";
             txtRoomType.ItemsSource = roomTypeService.GetRoomTypes();
-            txtRoomType.DisplayMemberPath = "RoomTypeName"; 
-            txtRoomType.SelectedValuePath = "RoomTypeId"; 
+            txtRoomType.DisplayMemberPath = "RoomTypeName";
+            txtRoomType.SelectedValuePath = "RoomTypeId";
             txtRoomType.SelectedValue = roomInformation.RoomTypeId;
         }
 
@@ -58,15 +42,9 @@ namespace TranHuyHoangWPF
         {
             roomInformation.RoomTypeId = (int)txtRoomType.SelectedValue;
 
+            roomInformation.RoomStatus = 1;
 
-            if (btnUpdate.Content.Equals("Add"))
-            {
-                roomInformationService.AddRoomInformation(roomInformation);
-            }
-            else
-            {
-                roomInformationService.UpdateRoomInformation(roomInformation);
-            }
+            roomInformationService.UpdateRoomInformation(roomInformation);
 
             DialogResult = true;
             Close();

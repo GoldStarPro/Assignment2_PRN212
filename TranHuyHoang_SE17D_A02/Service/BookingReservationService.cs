@@ -21,10 +21,11 @@ namespace Service
 
         public void DeleteBookingReservation(int id) => reservationRepository.RemoveBookingReservation(id);
 
-        public BookingReservation? GetBookingReservation(int id) => reservationRepository.GetBookingReservationById(id);
+        public BookingReservation? GetBookingReservationById(int id) => reservationRepository.GetBookingReservationById(id);
 
         public List<BookingReservation> GetBookingReservations() => reservationRepository.GetBookingReservations();
 
         public void UpdateBookingReservation(BookingReservation reservation) => reservationRepository.UpdateBookingReservation(reservation);
+        public int GenerateNewBookingReservationId(int customerID) => reservationRepository.GenerateNewBookingReservationId(customerID);
     }
 }

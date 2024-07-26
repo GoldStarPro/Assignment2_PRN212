@@ -14,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TranHuyHoangWPF.Views.Admin;
+using TranHuyHoangWPF.Views.User;
 
 namespace TranHuyHoangWPF
 {
@@ -22,7 +24,7 @@ namespace TranHuyHoangWPF
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private readonly ICustomerService _customerService = new CustomerService();
+        private readonly CustomerService _customerService = new CustomerService();
 
         public LoginWindow()
         {
@@ -40,12 +42,20 @@ namespace TranHuyHoangWPF
             var adminPassword = admin.GetProperty("password").GetString();
 
 
-            if (txtEmail.Text.Trim().Equals(adminEmail) && txtPassword.Password.Equals(adminPassword))
+            if (txtEmail.Text.Trim().Equals(adminEmail))
             {
-                var managementWindow = new ManagementWindow();
-                managementWindow.Show();
-                Close();
+                if (txtPassword.Password.Equals(adminPassword))
+                {
+                    var managementWindow = new ManagementWindow();
+                    managementWindow.Show();
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid email or password!", "Login", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
+
             else
             {
                 var customer = _customerService.GetCustomer(txtEmail.Text);
@@ -69,7 +79,6 @@ namespace TranHuyHoangWPF
                 }
             }
         }
-
         private void btnCancel_Click(object sender, RoutedEventArgs e) => Close();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using BusinessObject;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -82,6 +82,8 @@ public partial class FuminiHotelManagementContext : DbContext
             entity.Property(e => e.EmailAddress).HasMaxLength(50);
             entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.Telephone).HasMaxLength(12);
+            entity.Property(e => e.CustomerBirthday).HasColumnName("CustomerBirthday");
+            entity.Property(e => e.Password).HasColumnName("Password");
         });
 
         modelBuilder.Entity<RoomInformation>(entity =>

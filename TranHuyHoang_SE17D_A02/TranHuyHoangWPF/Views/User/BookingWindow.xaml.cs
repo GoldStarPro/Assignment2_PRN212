@@ -14,18 +14,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.User
 {
     /// <summary>
     /// Interaction logic for BookingWindow.xaml
     /// </summary>
     public partial class BookingWindow : Window
     {
-        private Customer _customer;
+        private Customer _customer = new Customer();
         private readonly IRoomInformationService roomInformationService = new RoomInformationService();
         private readonly IBookingReservationService reservationService = new BookingReservationService();
         private readonly IBookingDetailService bookingDetailService = new BookingDetailService();
-
 
         public BookingWindow(Customer customer)
         {
@@ -57,34 +56,79 @@ namespace TranHuyHoangWPF
 
         private void btnBook_Click(object sender, RoutedEventArgs e)
         {
-            if (cboRoomNumber.SelectedItem is RoomInformation room && dptbCheckIn.SelectedDate.HasValue && dptbCheckOut.SelectedDate.HasValue && decimal.Parse(txtTotalPrice.Text) > 0)
+            // Ngày CheckIn phải ít nhất là sau ngày Book
+            DateTime currentDate = DateTime.Now.Date;
+
+            if (cboRoomNumber.SelectedItem is RoomInformation room
+                && dptbCheckIn.SelectedDate.HasValue && dptbCheckOut.SelectedDate.HasValue
+                && dptbCheckIn.SelectedDate.Value.Date != dptbCheckOut.SelectedDate.Value.Date
+                && dptbCheckIn.SelectedDate.Value.Date >= currentDate
+                && decimal.Parse(txtTotalPrice.Text) > 0)
             {
+                int newBookingReservationId = reservationService.GenerateNewBookingReservationId(_customer.CustomerId);
+
+                // Check if the booking detail is already exist
+                var existingBookingDetail = bookingDetailService.GetBookingDetails().Where(bd => bd.BookingReservationId == newBookingReservationId
+                && bd.RoomId == room.RoomId).FirstOrDefault();
+                if (existingBookingDetail != null)
+                {
+                    MessageBox.Show("This room is already booked for the selected reservation.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 var reservation = new BookingReservation
                 {
+                    BookingReservationId = newBookingReservationId,
                     BookingDate = DateOnly.FromDateTime(DateTime.Now),
                     CustomerId = _customer.CustomerId,
                     BookingStatus = 1,
                     TotalPrice = decimal.Parse(txtTotalPrice.Text)
                 };
 
-                var bookingDetail = new BookingDetail
+                // Kiểm tra nếu đã có BookingReservationID này trong database
+                var existingReservation = reservationService.GetBookingReservationById(reservation.BookingReservationId);
+                if (existingReservation != null)
                 {
-                    BookingReservationId = reservation.BookingReservationId,
-                    RoomId = room.RoomId,
-                    StartDate = DateOnly.FromDateTime(dptbCheckIn.SelectedDate.Value),
-                    EndDate = DateOnly.FromDateTime(dptbCheckOut.SelectedDate.Value),
-                    ActualPrice = decimal.Parse(txtActualPrice.Text)
-                };
+                    // Cập nhật lại TotalPrice
+                    existingReservation.TotalPrice += reservation.TotalPrice;
+                    reservationService.UpdateBookingReservation(existingReservation);
 
-                reservationService.AddBookingReservation(reservation);
-                bookingDetailService.AddBookingDetail(bookingDetail);
+                    var bookingDetailu = new BookingDetail
+                    {
+                        BookingReservationId = reservation.BookingReservationId,
+                        RoomId = room.RoomId,
+                        StartDate = DateOnly.FromDateTime(dptbCheckIn.SelectedDate.Value),
+                        EndDate = DateOnly.FromDateTime(dptbCheckOut.SelectedDate.Value),
+                        ActualPrice = decimal.Parse(txtActualPrice.Text)
+                    };
+
+                    bookingDetailService.AddBookingDetail(bookingDetailu);
+                }
+
+                else
+                {
+                    var bookingDetail = new BookingDetail
+                    {
+                        BookingReservationId = reservation.BookingReservationId,
+                        RoomId = room.RoomId,
+                        StartDate = DateOnly.FromDateTime(dptbCheckIn.SelectedDate.Value),
+                        EndDate = DateOnly.FromDateTime(dptbCheckOut.SelectedDate.Value),
+                        ActualPrice = decimal.Parse(txtActualPrice.Text)
+                    };
+
+                    reservationService.AddBookingReservation(reservation);
+                    bookingDetailService.AddBookingDetail(bookingDetail);
+                }
+
+                LoadRoomList();
+
                 DialogResult = true;
-
                 Close();
             }
+
             else
             {
-                MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Missing fields or Invalid Date.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

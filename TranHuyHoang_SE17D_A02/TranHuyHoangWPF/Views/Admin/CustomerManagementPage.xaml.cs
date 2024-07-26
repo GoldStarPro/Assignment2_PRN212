@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TranHuyHoangWPF
+namespace TranHuyHoangWPF.Views.Admin
 {
     /// <summary>
     /// Interaction logic for CustomerManagementPage.xaml
@@ -24,7 +24,7 @@ namespace TranHuyHoangWPF
     {
         private readonly ICustomerService customerService = new CustomerService();
         private readonly IBookingReservationService reservationService = new BookingReservationService();
-        public List<Customer> Customers { get; set; }
+        public List<Customer> Customers { get; set; } = new List<Customer>();
 
         public CustomerManagementPage()
         {
@@ -34,7 +34,7 @@ namespace TranHuyHoangWPF
 
         private void txtSearchCustomer_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchText = txtSearchCustomer.Text;
+            string searchText = txtSearchCustomer.Text.ToLower();
             dgCustomers.ItemsSource = Customers.Where(c => c.CustomerFullName!.ToLower().Contains(searchText)).ToList();
         }
 
@@ -52,10 +52,11 @@ namespace TranHuyHoangWPF
                         customerService.DeleteCustomer(customer.CustomerId);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Please select at least one customer to delete.", "Selection Error");
-                }
+            }
+
+            else
+            {
+                MessageBox.Show("Please select at least one customer to delete.", "Selection Error");
             }
 
             LoadCustomers();
@@ -76,8 +77,8 @@ namespace TranHuyHoangWPF
         {
             if (dgCustomers.SelectedItem is Customer selectedCustomer)
             {
-                var profileWindow = new ProfileWindow(selectedCustomer);
-                if (profileWindow.ShowDialog() == true)
+                var updateCustomerWindow = new UpdateCustomerWindow(selectedCustomer);
+                if (updateCustomerWindow.ShowDialog() == true)
                 {
                     LoadCustomers();
                 }
@@ -97,8 +98,8 @@ namespace TranHuyHoangWPF
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var profileWindow = new ProfileWindow();
-            if (profileWindow.ShowDialog() == true)
+            var addCustomerWindow = new AddCustomerWindow();
+            if (addCustomerWindow.ShowDialog() == true)
             {
                 LoadCustomers();
             }

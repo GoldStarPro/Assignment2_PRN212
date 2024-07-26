@@ -19,12 +19,12 @@ namespace Service
 
         public void AddBookingDetail(BookingDetail bookingDetail) => bookingDetailRepository.InsertBookingDetail(bookingDetail);
 
-        public void DeleteBookingDetail(int bookingDetailId) => bookingDetailRepository.DeleteBookingDetail(bookingDetailId);
+        public void DeleteBookingDetail(int bookingDetailId, int roomID) => bookingDetailRepository.DeleteBookingDetail(bookingDetailId, roomID);
 
         public BookingDetail? GetBookingDetail(int id) => bookingDetailRepository.GetBookingDetailByID(id);
 
         public List<BookingDetail> GetBookingDetails() => bookingDetailRepository.GetBookingDetails();
 
-        public void UpdateBookingDetail(BookingDetail bookingDetail) => bookingDetailRepository.UpdateBookingDetail(bookingDetail);
+        public void UpdateBookingDetail(BookingDetail bookingDetail, int currentRoomID) => bookingDetailRepository.UpdateBookingDetail(bookingDetail, currentRoomID);
     }
 }

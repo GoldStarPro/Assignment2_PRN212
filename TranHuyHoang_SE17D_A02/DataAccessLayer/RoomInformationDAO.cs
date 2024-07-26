@@ -46,13 +46,26 @@ namespace DataAccessLayer
             }
         }
 
+        public static void UpdateRoomStatus(int roomId, byte newStatus)
+        {
+            using var context = new FuminiHotelManagementContext();
+            var room = context.RoomInformations.FirstOrDefault(r => r.RoomId == roomId);
+            if (room != null)
+            {
+                room.RoomStatus = newStatus;
+                context.SaveChanges();
+            }
+        }
+
+
         public static void DeleteRoomInformation(int roomID)
         {
             using var context = new FuminiHotelManagementContext();
             RoomInformation? existingRoomInformation = context.RoomInformations.FirstOrDefault(room => room.RoomId == roomID);
             if (existingRoomInformation != null)
             {
-                existingRoomInformation.RoomStatus = 2;
+                //existingRoomInformation.RoomStatus = 2;
+                context.RoomInformations.Remove(existingRoomInformation);
                 context.SaveChanges();
             }
         }

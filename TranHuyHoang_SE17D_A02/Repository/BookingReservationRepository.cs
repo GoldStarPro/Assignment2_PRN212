@@ -19,5 +19,6 @@ namespace Repository
         public void RemoveBookingReservation(int id) => BookingReservationDAO.RemoveReservation(id);
 
         public void UpdateBookingReservation(BookingReservation BookingReservation) => BookingReservationDAO.UpdateReservation(BookingReservation);
+        public int GenerateNewBookingReservationId(int customerID) => BookingReservationDAO.GenerateNewBookingReservationId(customerID);
     }
 }
